@@ -1,31 +1,6 @@
 package ADT_Matrix;
 
 public class MatrixOperasi {
-    public int row;
-    public int col;
-    public double[][] matrix  ;
-    public double MARK = Double.NaN;
-
-    // KONSTRUKTOR //
-    // Membuat Sebuah Matriks kosong dari tipe double [][]
-    public MatrixOperasi (double contents [][] , int rows, int cols) {
-        this.matrix = contents;
-        this.row = rows;
-        this.col = cols;
-    }
-
-    public MatrixOperasi (int rows, int cols){
-        int i, j;
-        matrix = new double[rows][cols];
-        this.row = rows;
-        this.col = cols;
-        for (i = 0; i < rows; i++){
-            for (j = 0; j < cols ; j++){
-                setElmt(matrix, i, j, MARK);
-            }
-        }
-    }
-
     public static boolean isIdxMatrixValid (int i, int j){ //index valid untuk semua matrix
         return (i >= 0 && j>= 0);
     }
@@ -205,7 +180,8 @@ public class MatrixOperasi {
         return multiplyConst (matrix, (-1));
     }
 
-    //OPERASI TINGKAT LANJUT 
+
+    //** OPERASI TINGKAT LANJUT **\\
     public static boolean cekSegitiga (double[][] matrix){ //cek apabila matrix berbentuk segitiga
         boolean status = true;
         boolean statusBawah = true;
@@ -237,6 +213,14 @@ public class MatrixOperasi {
             status = true;
         }
         return status;
+    }
+    public static void rowSwap(double[][]m, int rows1, int rows2){ //tuker baris
+		double temp;
+		for (int i = 0; i < getColEff(m); i++){
+			temp = getElmt(m,rows1, i);
+			setElmt(m, rows1, i, getElmt(m, rows2, i));
+			setElmt(m, rows2, i, temp);
+		}
     }        
     public static double[][] subMatrix (double[][] matrix, int baris, int kolom){ //mencari submatrix
         double[][] submatrix = new double [getLastIdxRow(matrix)-1][getLastIdxCol(matrix)-1];
@@ -286,7 +270,7 @@ public class MatrixOperasi {
             }
             return det;
         }
-        public static double[][] matrixTranspose (double[][] matrix){
+        public static double[][] matrixTranspose (double[][] matrix){ //transpose matrix
             double[][] newMatrix = new double[getRowEff(matrix)-1][getColEff(matrix)-1];
             for (int i=0; i<getRowEff(matrix); i++){
                 for (int j=0; j<getColEff(matrix); j++){
@@ -295,7 +279,7 @@ public class MatrixOperasi {
             }
             return newMatrix;
         }
-        public static double[][] createIdentity (int x){
+        public static double[][] createIdentity (int x){ //buat matrix identitas
             double[][] identity = new double [x-1][x-1];
             for (int i=0; i<x; i++){
                 for (int j=0; j<x; j++){
@@ -310,163 +294,161 @@ public class MatrixOperasi {
             return identity;
         }
 
-        // //FUNGSI-FUNGSI OBE
-        // public static double[][] gaussElimination(double[][] matrix) {
-        //     int n = matrix.getRowLength();
-        //     int m = matrix.getColLength();
-        //     double[] X = new double[n];
+        public static double[][] gaussElimination(double[][] matrix) { //gauss elimnasi
+            int n = getRowEff(matrix);
+            int m = getColEff(matrix);
         
-        //     // Forward Elimination
-        //     for (int i = 0; i < n; i++) {
-        //         int pivotRow = i;
+            // Forward Elimination
+            for (int i = 0; i < n; i++) {
+                int pivotRow = i;
         
-        //         // Find the first non-zero pivot
-        //         if (i < matrix.col) {
-        //             while (pivotRow < n && matrix.getElmt(pivotRow, i) == 0) {
-        //                 pivotRow++;
-        //             }
+                // Find the first non-zero pivot
+                if (i < m) {
+                    while (pivotRow < n && getElmt(matrix, pivotRow, i) == 0) {
+                        pivotRow++;
+                    }
         
-        //             // Skip if no pivot found
-        //             if (pivotRow == n) {
-        //                 continue;
-        //             }
+                    // Skip if no pivot found
+                    if (pivotRow == n) {
+                        continue;
+                    }
         
-        //             // Normalize pivot row
-        //             double pivotValue = matrix.getElmt(pivotRow, i);
-        //             if (pivotValue != 1) {
-        //                 for (int j = i; j < m; j++) {
-        //                     matrix.setElmt(pivotRow, j, matrix.getElmt(pivotRow, j) / pivotValue);
-        //                 }
-        //             }
+                    // Normalize pivot row
+                    double pivotValue = getElmt(matrix, pivotRow, i);
+                    if (pivotValue != 1) {
+                        for (int j = i; j < m; j++) {
+                            setElmt(matrix, pivotRow, j, getElmt(matrix, pivotRow, j) / pivotValue);
+                        }
+                    }
         
-        //             // Swap pivot row with current row
-        //             for (int j = i; j < m; j++) {
-        //                 double temp = matrix.getElmt(i, j);
-        //                 matrix.setElmt(i, j, matrix.getElmt(pivotRow, j));
-        //                 matrix.setElmt(pivotRow, j, temp);
-        //             }
+                    // Swap pivot row with current row
+                    for (int j = i; j < m; j++) {
+                        double temp = getElmt(matrix, i, j);
+                        setElmt(matrix, i, j, getElmt(matrix, pivotRow, j));
+                        setElmt(matrix, pivotRow, j, temp);
+                    }
         
-        //             // Eliminate subsequent rows
-        //             for (int j = i + 1; j < n; j++) {
-        //                 double factor = matrix.getElmt(j, i);
-        //                 for (int k = i; k < m; k++) {
-        //                     matrix.setElmt(j, k, matrix.getElmt(j, k) - factor * matrix.getElmt(i, k));
-        //                 }
-        //             }
-        //         }
-        //     }
+                    // Eliminate subsequent rows
+                    for (int j = i + 1; j < n; j++) {
+                        double factor = getElmt(matrix, j, i);
+                        for (int k = i; k < m; k++) {
+                            setElmt(matrix, j, k, getElmt(matrix, j, k) - factor * getElmt(matrix, i, k));
+                        }
+                    }
+                }
+            }
         
-        //     // Move zero rows to the bottom
-        //     for (int i = 0; i < n; i++) {
-        //         boolean allZero = true;
-        //         for (int j = 0; j < m - 1; j++) {
-        //             if (matrix.getElmt(i, j) != 0) {
-        //                 allZero = false;
-        //                 break;
-        //             }
-        //         }
-        //         if (allZero) {
-        //             for (int k = i; k < n - 1; k++) {
-        //                 matrix.rowSwap(matrix, k, k + 1);
-        //             }
-        //         }
-        //     }
+            // Move zero rows to the bottom
+            for (int i = 0; i < n; i++) {
+                boolean allZero = true;
+                for (int j = 0; j < m - 1; j++) {
+                    if (getElmt(matrix, i, j) != 0) {
+                        allZero = false;
+                        break;
+                    }
+                }
+                if (allZero) {
+                    for (int k = i; k < n - 1; k++) {
+                        rowSwap(matrix, k, k + 1);
+                    }
+                }
+            }
         
-        //     // Normalize each row's pivot and perform further elimination
-        //     for (int i = 0; i < n; i++) {
-        //         int pivotCol = 0;
-        //         while (pivotCol < m - 1 && matrix.getElmt(i, pivotCol) == 0) {
-        //             pivotCol++;
-        //         }
+            // Normalize each row's pivot and perform further elimination
+            for (int i = 0; i < n; i++) {
+                int pivotCol = 0;
+                while (pivotCol < m - 1 && getElmt(matrix, i, pivotCol) == 0) {
+                    pivotCol++;
+                }
         
-        //         if (pivotCol < m - 1) {
-        //             double pivotValue = matrix.getElmt(i, pivotCol);
-        //             if (pivotValue != 1) {
-        //                 for (int k = pivotCol; k < m; k++) {
-        //                     matrix.setElmt(i, k, matrix.getElmt(i, k) / pivotValue);
-        //                 }
-        //             }
-        //         }
-        //     }
+                if (pivotCol < m - 1) {
+                    double pivotValue = getElmt(matrix, i, pivotCol);
+                    if (pivotValue != 1) {
+                        for (int k = pivotCol; k < m; k++) {
+                            setElmt(matrix, i, k, getElmt(matrix, i, k) / pivotValue);
+                        }
+                    }
+                }
+            }
         
-        //     return matrix;
-        // }
+            return matrix;
+        }
         
-        // public static double[][] gaussJordanElimination(double[][] A) {
-        //     int n = getRowEff(A);
-        //     int m = getColEff(A);
+        public static double[][] gaussJordanElimination(double[][] A) { //gauss jordan eliminasi
+            int n = getRowEff(A);
+            int m = getColEff(A);
         
-        //     // Forward Elimination with Pivot
-        //     for (int i = 0; i < n; i++) {
-        //         int pivotRow = i;
+            // Forward Elimination with Pivot
+            for (int i = 0; i < n; i++) {
+                int pivotRow = i;
         
-        //         // Find pivot row
-        //         if (i < A.col) {
-        //             while (pivotRow < n && A.getElmt(pivotRow, i) == 0) {
-        //                 pivotRow++;
-        //             }
+                // Find pivot row
+                if (i < getColEff(A)) {
+                    while (pivotRow < n && getElmt(A, pivotRow, i) == 0) {
+                        pivotRow++;
+                    }
         
-        //             // Skip if no pivot is found
-        //             if (pivotRow == n) {
-        //                 continue;
-        //             }
+                    // Skip if no pivot is found
+                    if (pivotRow == n) {
+                        continue;
+                    }
         
-        //             // Swap rows to bring pivot row to the current position
-        //             A.rowSwap(A, i, pivotRow);
+                    // Swap rows to bring pivot row to the current position
+                    rowSwap(A, i, pivotRow);
         
-        //             // Normalize pivot to 1
-        //             double pivot = A.getElmt(i, i);
-        //             for (int j = i; j < m; j++) {
-        //                 A.setElmt(i, j, A.getElmt(i, j) / pivot);
-        //             }
+                    // Normalize pivot to 1
+                    double pivot = getElmt(A, i, i);
+                    for (int j = i; j < m; j++) {
+                        setElmt(A, i, j, getElmt(A, i, j) / pivot);
+                    }
         
-        //             // Eliminate other rows
-        //             for (int j = 0; j < n; j++) {
-        //                 if (j != i) {
-        //                     double factor = A.getElmt(j, i);
-        //                     for (int k = i; k < m; k++) {
-        //                         A.setElmt(j, k, A.getElmt(j, k) - factor * A.getElmt(i, k));
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
+                    // Eliminate other rows
+                    for (int j = 0; j < n; j++) {
+                        if (j != i) {
+                            double factor = getElmt(A, j, i);
+                            for (int k = i; k < m; k++) {
+                                setElmt(A, j, k, getElmt(A, j, k) - factor * getElmt(A, i, k));
+                            }
+                        }
+                    }
+                }
+            }
         
-        //     // Move zero rows to the bottom
-        //     for (int i = 0; i < n; i++) {
-        //         boolean allZero = true;
-        //         for (int j = 0; j < m - 1; j++) {
-        //             if (A.getElmt(i, j) != 0) {
-        //                 allZero = false;
-        //                 break;
-        //             }
-        //         }
-        //         if (allZero) {
-        //             for (int k = i; k < n - 1; k++) {
-        //                 A.rowSwap(A, k, k + 1);
-        //             }
-        //         }
-        //     }
+            // Move zero rows to the bottom
+            for (int i = 0; i < n; i++) {
+                boolean allZero = true;
+                for (int j = 0; j < m - 1; j++) {
+                    if (getElmt(A, i, j) != 0) {
+                        allZero = false;
+                        break;
+                    }
+                }
+                if (allZero) {
+                    for (int k = i; k < n - 1; k++) {
+                        rowSwap(A, k, k + 1);
+                    }
+                }
+            }
         
-        //     // Ensure pivot normalization if not already done
-        //     for (int i = 0; i < n; i++) {
-        //         int pivotCol = 0;
-        //         while (pivotCol < m - 1 && A.getElmt(i, pivotCol) == 0) {
-        //             pivotCol++;
-        //         }
+            // Ensure pivot normalization if not already done
+            for (int i = 0; i < n; i++) {
+                int pivotCol = 0;
+                while (pivotCol < m - 1 && getElmt(A, i, pivotCol) == 0) {
+                    pivotCol++;
+                }
         
-        //         if (pivotCol < m - 1) {
-        //             double pivotValue = A.getElmt(i, pivotCol);
-        //             if (pivotValue != 1) {
-        //                 for (int k = pivotCol; k < m; k++) {
-        //                     A.setElmt(i, k, A.getElmt(i, k) / pivotValue);
-        //                 }
-        //             }
-        //         }
-        //     }
+                if (pivotCol < m - 1) {
+                    double pivotValue = getElmt(A, i, pivotCol);
+                    if (pivotValue != 1) {
+                        for (int k = pivotCol; k < m; k++) {
+                            setElmt(A, i, k, getElmt(A, i, k) / pivotValue);
+                        }
+                    }
+                }
+            }
         
-        //     return A;
-        // }
+            return A;
+        }
     
     }
     
