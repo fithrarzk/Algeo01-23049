@@ -66,6 +66,7 @@ public class MatrixInput {
             System.arraycopy(matrix1[i], 0, matrix[i], 0, cols);
             System.arraycopy(matrix2[i], 0, matrix[i], cols, 1);
         }
+        
         return matrix;
     }
 }

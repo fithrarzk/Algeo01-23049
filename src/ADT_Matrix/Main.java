@@ -8,7 +8,6 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         int pilihan, pil1, pil2, pil3;
-
         // Menampilkan menu utama
         System.out.println("=== Menu Utama ===");
         System.out.println("1. Sistem Persamaan Linier");
@@ -23,7 +22,6 @@ public class Main {
         pilihan = input.nextInt();
 
         if (pilihan == 1) {
-            // Menu untuk sistem persamaan linear
             System.out.println("=== Menu Sistem Persamaan Linier ===");
             System.out.println("1. Metode Eliminasi Gauss");
             System.out.println("2. Metode Eliminasi Gauss-Jordan");

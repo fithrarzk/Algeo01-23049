@@ -53,6 +53,8 @@ public class SPL {
             }
         }
     }
+
+
     public static void gaussJordanSPL (Matrix Mgajo) {
         //Melakukan eliminasi gauss jordan
         Mgajo = Matrix.gaussJordanElimination(Mgajo);

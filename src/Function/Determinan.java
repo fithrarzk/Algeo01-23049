@@ -42,6 +42,7 @@ public class Determinan {
             det += Math.pow(-1, i) * m.getElmt(0, i) * determinanKofaktor(temp);
             //System.out.println("det=" + det);
         }
+        
 
         return det;
     }

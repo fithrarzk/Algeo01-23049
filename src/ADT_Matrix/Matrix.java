@@ -7,6 +7,7 @@ package ADT_Matrix;
 //import java.util.Scanner;
 //import Function.*;
 
+
 public class Matrix {
     public int row;
     public int col;
@@ -77,7 +78,6 @@ public class Matrix {
 			m.setElmt(rows2, i, temp);
 		}
     }
-
 
     public static Matrix gaussElimination(Matrix matrix) {
         int n = matrix.getRowLength();
@@ -160,6 +160,7 @@ public class Matrix {
         return matrix;
     }
     
+    
     public static Matrix gaussJordanElimination(Matrix A) {
         int n = A.getRowLength();
         int m = A.getColLength();
@@ -222,7 +223,7 @@ public class Matrix {
             while (pivotCol < m - 1 && A.getElmt(i, pivotCol) == 0) {
                 pivotCol++;
             }
-    
+
             if (pivotCol < m - 1) {
                 double pivotValue = A.getElmt(i, pivotCol);
                 if (pivotValue != 1) {
@@ -232,7 +233,6 @@ public class Matrix {
                 }
             }
         }
-    
         return A;
     }
 
