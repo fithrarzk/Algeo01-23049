@@ -1,4 +1,6 @@
 package ADT_Matrix;
+import Function.Determinan;
+import Function.Invers;
 //import Function.Determinan;
 import Function.SPL;
 
@@ -36,9 +38,12 @@ public class test {
         //matrix.setElmt(0, 0, 10.0); // Mengatur elemen (0,0) menjadi 10.0
         //MatrixOutput.printMatrix(matrix);
         //System.out.println("Elemen pada indeks (0,0) setelah diset: " + matrix.getElmt(0, 0));
-
+        */
         // Test case 5: Menghitung determinan matriks (jika matriks persegi)
-        
+        double[][] mat = MatrixInput.readMatrixKeyboard2();
+        Matrix m = new Matrix(mat, mat.length, mat[0].length);
+        SPL.splInvers(m);
+        /* 
         System.out.println("\nTest Case 5: Menghitung determinan matriks (ekspansi kofaktor)");
         if (matrix.isSquare()) {
             double determinant = Determinan.determinanKofaktor(matrix);
@@ -47,13 +52,15 @@ public class test {
             System.out.println("Tidak dapat menghitung determinan karena matriks bukan persegi.");
         }
         */
+        /* 
         System.out.println("Test Case: Menyelesaikan SPL dengan metode Cramer");
         
         // Membaca matriks augmented (gabungan koefisien dan hasil)
-        double[][] mat = MatrixInput.readMatrixSPL();
+        double[][] mat = MatrixInput.readMatrixKeyboard2();
         Matrix m = new Matrix(mat, mat.length, mat[0].length);
 
         // Menjalankan metode SPL Cramer
         SPL.splCramer(m);
+        */
     }
 }

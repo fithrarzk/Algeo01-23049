@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class MatrixInput {
     public static Scanner input = new Scanner(System.in);
 
-    public static double[][] readMatrixKeyboard(){
+    public static double[][] readMatrixKeyboard1(){
         int i,j;
         double [][] matrix;
         int rows, cols;
@@ -30,7 +30,7 @@ public class MatrixInput {
         return matrix;
     }
 
-    public static double[][] readMatrixSPL(){
+    public static double[][] readMatrixKeyboard2(){
         int i,j;
         double [][] matrix1, matrix2, matrix;
         int rows, cols;
