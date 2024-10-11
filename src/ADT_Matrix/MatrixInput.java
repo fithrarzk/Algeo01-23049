@@ -27,6 +27,47 @@ public class MatrixInput {
             scanner.close();
         }
     }
+
+    public static double[][] augmentedMatrix(){
+        Scanner scanner = new Scanner(System.in);
+        int i,j;
+        double [][] matrix1, matrix2, matrix;
+        int baris, kolom;
+
+        // Input Jumlah Baris dan Kolom
+        System.out.print("Masukkan jumlah baris: ");
+        baris = scanner.nextInt();
+        System.out.print("Masukkan jumlah kolom: ");
+        kolom = scanner.nextInt();
+        
+        // Membuat Matriks 1
+        matrix1 = new double[baris][kolom];
+        int expectedElements = baris * kolom;
+        System.out.println("Masukkan " + expectedElements + " elemen matriks utama: ");
+        for(i = 0; i < baris; i++){
+            for(j = 0; j < kolom; j++){
+                matrix1[i][j] = scanner.nextDouble();
+            }
+        }
+
+        // Membuat Matriks 2 dengan ukuran nx1
+        matrix2 = new double[baris][1];
+        System.out.println("Masukkan elemen matriks hasil: ");
+        for(i = 0; i < baris; i++){
+            for(j = 0; j < 1; j++){
+                matrix2 [i][j] = scanner.nextDouble();
+            }
+        }
+
+        // Membuat Matriks Augmented dengan Menggabungkan Matrix A dan B
+        matrix = new double [baris][kolom + 1];
+        for (i = 0; i < baris; i++){
+            System.arraycopy(matrix1[i], 0, matrix[i], 0, kolom);
+            System.arraycopy(matrix2[i], 0, matrix[i], kolom, 1);
+        }
+        return matrix;
+    }
+
     public static double [][] hilbertMatrix() { // Input Hilbert
         Scanner scanner = new Scanner(System.in);
         try{
