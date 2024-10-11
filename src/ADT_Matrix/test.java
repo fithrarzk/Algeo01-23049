@@ -50,10 +50,9 @@ public class test {
         System.out.println("Test Case: Menyelesaikan SPL dengan metode Cramer");
         
         // Membaca matriks augmented (gabungan koefisien dan hasil)
-        double[][] mat = MatrixInput.readMatrixSPL();
+        double[][] mat = MatrixInput.readMatrixKeyboard();
         Matrix m = new Matrix(mat, mat.length, mat[0].length);
-
         // Menjalankan metode SPL Cramer
-        SPL.splCramer(m);
+        MatrixOutput.printMatrix(m);
     }
 }

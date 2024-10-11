@@ -1,15 +1,21 @@
 package Function;
-
-import ADT_Matrix.Matrix;
-import ADT_Matrix.MatrixOutput;
+import java.io.BufferedReader;
+import ADT_Matrix.*;
+import java.io.InputStreamReader;
 
 public class SPL {
-    //Mencari Solusi dari SPL dengan Kaidah Cremer
-    public static void splCramer (Matrix m){
+    public static void gaussSPL (Matrix Mgauss) {
+        BufferedReader inputFile = new BufferedReader(new InputStreamReader(System.in));
+        //Melakukan eliminasi gauss 
+        Mgauss = Matrix.gaussElimination(Mgauss);
+        double X[] = new double[Mgauss.getRowLength()];
+    }
+
+    public static void cramerSPL (Matrix m){
         Matrix matMain;
         Matrix matRes;
         Matrix temp;
-
+        
         matMain = new Matrix (m.getRowLength(), m.getColLength()-1);
         matRes = new Matrix (m.getRowLength(), 1);
 
@@ -46,5 +52,11 @@ public class SPL {
                 }
             }
         }
+    }
+    public static void gaussJordanSPL (Matrix Mgajo) {
+        //Melakukan eliminasi gauss jordan
+        Mgajo = Matrix.gaussJordanElimination(Mgajo);
+        int pil3;
+        BufferedReader inputFile = new BufferedReader(new InputStreamReader(System.in));
     }
 }
