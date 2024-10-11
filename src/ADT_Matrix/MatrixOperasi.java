@@ -243,33 +243,6 @@ public class MatrixOperasi {
         return submatrix;
     }
 
-    public static double determinant (double[][] matrix){ //mencari determinan matrix
-        double det = 1.0;
-        if (!isSquare(matrix)){ //matrix tidak nxn
-            System.out.println("Tidak ada determinan!");
-        }
-        else if (cekSegitiga(matrix)){ //jika matrix berbentuk segitiga (reduksi baris)
-            for (int i=0; i<getRowEff(matrix); i++){
-                det *= getElmtDiagonal(matrix, i);
-            }
-        }
-        else { //menggunakan ekspansi kofaktor
-            if (getColEff(matrix) == 1){
-                det = matrix [0][0];
-            }
-            else if (getColEff(matrix) == 2){
-                det = (matrix [0][0] * matrix [1][1]) - (matrix [1][0] * matrix [0][1]);
-            }
-            else {
-                for (int i=0; i<getRowEff(matrix); i++){
-                    for (int j=0; j<getColEff(matrix); j++){
-                        det += determinant (subMatrix(matrix, i, j)) * Math.pow((-1), (i+j));
-                    }
-                }
-            }
-            }
-            return det;
-        }
         public static double[][] matrixTranspose (double[][] matrix){ //transpose matrix
             double[][] newMatrix = new double[getRowEff(matrix)-1][getColEff(matrix)-1];
             for (int i=0; i<getRowEff(matrix); i++){
