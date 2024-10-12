@@ -81,13 +81,13 @@ public class BicubicSpline {
         return matrixB;
     }
 
-    public static double[][] valueBicubicA (double[][] matrix){
+    public static double[][] valueBicubicA (double[][] matrix){ //mencari nilai semua nilai a 
         double [][] matrixBic = createBicubic();
         double [][] matrixA = MatrixOperasi.multiplyMatrix(Invers.inversOBE(matrixBic), matrix);
         return matrixA;
     }
 
-    public static double hasilBicubic (double [][] matrix, int a, int b){
+    public static double hasilBicubic (double [][] matrix, int a, int b){ //menghitung hasil f(a,b)
         double hasil = 0.0;
         double valA = 1.0, valB = 1.0;
         double[][] matrixA = valueBicubicA(matrix);
