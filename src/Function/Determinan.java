@@ -12,6 +12,7 @@ public class Determinan {
 
         // Kasus bukan matriks persegi
         if (!m.isSquare()) {
+            System.out.println("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan");
             return m.MARK;
         }
 
@@ -51,60 +52,58 @@ public class Determinan {
         if (Matrix.isIdentity(m)){
             return 1;
         }
-        if (Matrix.isSquare(m)){
-            int i,j;
-            int p = 0; // menyimpan jumlah pertukaran baris
-            int n = m.getRowLength();
+        if (!m.isSquare()) {
+            System.out.println("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan");
+            return m.MARK;
+        }
+        
+        int i,j;
+        int p = 0; // menyimpan jumlah pertukaran baris
+        int n = m.getRowLength();
 
-            // menukar baris untuk memindahkan elemen pertama yang tidak nol ke posisi diagonal
-            for (int rowidx = 0; rowidx < n-1; rowidx++){
-                if (Matrix.FirstElementNot0Coll(m, rowidx, 0) != rowidx){
-                    Matrix.swap_row(m, Matrix.FirstElementNot0Coll(m, rowidx, 0), rowidx);
-                    p++;
-                }
+        // menukar baris untuk memindahkan elemen pertama yang tidak nol ke posisi diagonal
+        for (int rowidx = 0; rowidx < n-1; rowidx++){
+            if (Matrix.FirstElementNot0Coll(m, rowidx, 0) != rowidx){
+                Matrix.swap_row(m, Matrix.FirstElementNot0Coll(m, rowidx, 0), rowidx);
+                p++;
             }
-            // Membuat matriks segitiga atas dengan membuat nilai dibawah diagonal utama menjadi 0
-            for (i = 1; i < n; i++){
-                for (j = 0; j < i; j++){
-                    // Jika elemen di posisi (i, j) tidak nol, maka perlu mengeliminasi nilai tersebut
-                    if (m.getElmt(i,j) != 0){
-                        if (m.getElmt(i-1,j)==0){
-                            double faktor = (double) m.getElmt(i,j)/ m.getElmt(Matrix.FirstElementNot0Coll(m, 0, j),j);
-                            for (int l = 0; l < n; l++)
-                            {   
-                                double subs = m.getElmt(Matrix.FirstElementNot0Coll(m, 0, j),l) * faktor;
-                                m.setElmt(i,l, m.getElmt(i,l)-subs);
-                            }
+        }
+        // Membuat matriks segitiga atas dengan membuat nilai dibawah diagonal utama menjadi 0
+        for (i = 1; i < n; i++){
+            for (j = 0; j < i; j++){
+                // Jika elemen di posisi (i, j) tidak nol, maka perlu mengeliminasi nilai tersebut
+                if (m.getElmt(i,j) != 0){
+                    if (m.getElmt(i-1,j)==0){
+                        double faktor = (double) m.getElmt(i,j)/ m.getElmt(Matrix.FirstElementNot0Coll(m, 0, j),j);
+                        for (int l = 0; l < n; l++)
+                        {   
+                            double subs = m.getElmt(Matrix.FirstElementNot0Coll(m, 0, j),l) * faktor;
+                            m.setElmt(i,l, m.getElmt(i,l)-subs);
                         }
-                        else{
-                            double faktor = (double) m.getElmt(i,j)/m.getElmt(i-1,j);
-                            for (int l = 0; l < n; l++){
-                                double subs = m.getElmt(i-1,l) * faktor;
-                                m.setElmt(i,l, m.getElmt(i,l)-subs);
-                            }
+                    }
+                    else{
+                        double faktor = (double) m.getElmt(i,j)/m.getElmt(i-1,j);
+                        for (int l = 0; l < n; l++){
+                            double subs = m.getElmt(i-1,l) * faktor;
+                            m.setElmt(i,l, m.getElmt(i,l)-subs);
                         }
                     }
                 }
             }
-            //Menghitung determinan dengan mengali semua elemen diagonal
-            double det = 1;
-            for (int q = 0; q < n; q++){
-                det *= m.getElmt(q, q);
-            }
+        }
+        //Menghitung determinan dengan mengali semua elemen diagonal
+        double det = 1;
+        for (int q = 0; q < n; q++){
+            det *= m.getElmt(q, q);
+        }
 
-            det *= Math.pow((-1), p);
+        det *= Math.pow((-1), p);
 
-            if (det == -0) {
-                det = 0;
-            }
-
-            return det;
+        if (det == -0) {
+            det = 0;
+        }
+        return det;
         
-        }
-        else{
-            //Matriks tidak simetri
-            return m.MARK;
-        }
     }
 }
 

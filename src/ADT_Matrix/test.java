@@ -40,9 +40,18 @@ public class test {
         //System.out.println("Elemen pada indeks (0,0) setelah diset: " + matrix.getElmt(0, 0));
         */
         // Test case 5: Menghitung determinan matriks (jika matriks persegi)
-        double[][] mat = MatrixInput.readMatrixKeyboard2();
+        double[][] mat = MatrixInput.readMatrixKeyboard1();
         Matrix m = new Matrix(mat, mat.length, mat[0].length);
-        SPL.splInvers(m);
+        Matrix inv = Invers.inversOBE(m);
+        if (inv==null){
+            System.out.println("Matrix singular, tidak bisa dihitung inversenya.");
+        }
+        else {
+            MatrixOutput.printMatrix(inv);
+        }
+        
+        // double det = Determinan.determinanReduksi(m);
+        // System.out.printf("det = %.4f\n",(det));
         /* 
         System.out.println("\nTest Case 5: Menghitung determinan matriks (ekspansi kofaktor)");
         if (matrix.isSquare()) {
