@@ -1,5 +1,7 @@
 package ADT_Matrix;
 
+import Function.Determinan;
+
 public class Matrix {
     public int row;
     public int col;
@@ -43,6 +45,8 @@ public class Matrix {
     public double getElmt(int i, int j){
         return this.matrix[i][j];
     }
+
+
 
     public static Matrix swapRow (Matrix m, int row1, int row2) {
         for (int j = 0; j < m.getColEff(); j++) {
@@ -415,6 +419,68 @@ public class Matrix {
             }
         }
         return A;
+    }
+
+
+    public static double detKofaktorRC(Matrix m, int row, int col) {
+        int n = m.getRowEff();
+        Matrix temp = new Matrix(n-1, n-1); 
+        
+        int tempRow = 0; //  baris pada matriks temp
+        for (int i = 0; i < n; i++) {
+            if (i == row) {
+                continue; 
+            }
+    
+            int tempCol = 0; //  kolom pada matriks temp
+            for (int j = 0; j < n; j++) {
+                if (j == col) {
+                    continue; 
+                }
+    
+                // Memasukkan elemen ke matriks minor
+                temp.setElmt(tempRow, tempCol, m.getElmt(i, j));
+                tempCol++;
+            }
+            tempRow++; 
+        }
+    
+        // Mengembalikan determinan dari matriks minor
+        return Determinan.determinanKofaktor(temp);
+    }
+    
+    // Matriks Kofaktor
+    public static Matrix matriksKofaktor (Matrix m){
+        int n = m.getRowEff();
+        Matrix mKofaktor;
+
+		mKofaktor = new Matrix(n,n);
+		
+		for (int i = 0; i < n; i++){
+			for (int j = 0; j < n; j++){
+				mKofaktor.setElmt(i, j, detKofaktorRC(m,i,j));
+				if ((i+j) % 2 == 1 && mKofaktor.getElmt(i,j) != 0)
+					mKofaktor.setElmt(i, j, (mKofaktor.getElmt(i,j) * -1));
+			}
+		}
+
+		return mKofaktor;
+    }
+
+    // Matriks adjoin dari matrix kofaktor
+    public static Matrix Adjoin (Matrix m){
+        Matrix mAdjoin;
+        int i, j;
+        
+        m = Matrix.matriksKofaktor(m);
+        mAdjoin = new Matrix(m.getRowEff(), m.getColEff());
+
+        for (i = 0; i < m.row; i++){
+            for (j = 0; j < m.getColEff(); j++){
+                mAdjoin.setElmt(i, j, m.getElmt(j, i));
+            }
+        }
+        return mAdjoin;
     }
 
 }

@@ -1,12 +1,32 @@
 package Function;
 
 import ADT_Matrix.Matrix;
+import ADT_Matrix.MatrixOutput;
 
-public class InversOBE {
+public class Invers {
+    public static Matrix inversAdjoin (Matrix m){
+		int i, j;
+		// mencari matriks adjoin
+		Matrix mAdjoin = Matrix.Adjoin(m);
+		double det = Determinan.determinanKofaktor(m);
+		if (det==0){
+            return null;
+        }
+        else{
+            for (i = 0; i < m.getRowEff(); i++){
+                // membagi matriks adjoin dengan determinan m
+                for (j = 0; j < m.getColEff(); j++){
+                    mAdjoin.setElmt(i, j, (mAdjoin.getElmt(i, j)/det));
+                }
+            }
+            return mAdjoin;
+        }
+	}
+
     public static void inversOBE(Matrix m) {
         int n = m.getRowEff(); // Assuming it's a square matrix
         Matrix identity = Matrix.createIdentity(n);
-        
+
         // Perform the Gauss-Jordan elimination to get the inverse
         for (int i = 0; i < n; i++) {
             double pivot = m.getElmt(i, i); // Get the pivot element
@@ -32,6 +52,8 @@ public class InversOBE {
                 }
             }
         }
+        MatrixOutput.printMatrix(identity);
     }
+    
 }
 
