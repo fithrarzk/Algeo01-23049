@@ -4,7 +4,28 @@ import java.util.Scanner;
 import Function.*;
 
 public class Main {
+
+    public static void clearConsole() {
+        String os = System.getProperty("os.name").toLowerCase();
+        
+        try {
+            if (os.contains("windows")) {
+                // Jika OS adalah Windows, jalankan perintah yang sesuai
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else if (os.contains("mac") || os.contains("nix") || os.contains("nux")) {
+                // Jika OS adalah MacOS atau Unix/Linux, jalankan perintah clear
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            } else {
+                // Jika OS tidak dikenali, tidak melakukan apa-apa atau menampilkan pesan
+                System.out.println("Fungsi clear console tidak didukung di sistem operasi ini.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
+        clearConsole();
         Scanner input = new Scanner(System.in);
         int pilihan, pil1, pil2, pil3 = 0; 
 
@@ -18,6 +39,7 @@ public class Main {
         System.out.println("7. Keluar");
         System.out.print("Masukkan pilihan Anda: ");
         pilihan = input.nextInt();
+        clearConsole();
         System.out.println();
 
         if (pilihan == 1) {
@@ -28,12 +50,14 @@ public class Main {
             System.out.println("4. Kaidah Cramer");
             System.out.print("Pilih metode: ");
             pil1 = input.nextInt();
+            clearConsole();
             System.out.println();
 
             System.out.println("1. Masukan dari Keyboard");
             System.out.println("2. Masukan dari File");
             System.out.print("Pilih metode input: ");
             pil2 = input.nextInt();
+            clearConsole();
             System.out.println();
             Matrix m1 = null;
 
@@ -42,6 +66,7 @@ public class Main {
                 System.out.println("2. Masukan Matrix Augmented");
                 System.out.print("Pilih jenis input: ");
                 pil3 = input.nextInt();
+                clearConsole();
                 System.out.println();
                 
                 double[][] m = null;
@@ -89,6 +114,7 @@ public class Main {
             System.out.println("2. Metode OBE");
             System.out.print("Pilih metode: ");
             pil1 = input.nextInt();
+            clearConsole();
             System.out.println();
 
             System.out.println("=== Menu Input ===");
@@ -96,6 +122,7 @@ public class Main {
             System.out.println("2. Masukan dari File");
             System.out.print("Pilih metode input: ");
             pil2 = input.nextInt();
+            clearConsole();
             System.out.println();
             Matrix m1 = null;
 
@@ -142,6 +169,7 @@ public class Main {
             System.out.println("2. Metode Adjoin");
             System.out.print("Pilih metode: ");
             pil1 = input.nextInt();
+            clearConsole();
             System.out.println();
 
             System.out.println("=== Menu Input ===");
@@ -149,6 +177,7 @@ public class Main {
             System.out.println("2. Masukan dari File");
             System.out.print("Pilih metode input: ");
             pil2 = input.nextInt();
+            clearConsole();
             System.out.println();
             Matrix m1 = null;
 
