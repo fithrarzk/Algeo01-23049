@@ -35,7 +35,7 @@ public class Main {
             System.out.print("Pilih metode input: ");
             pil2 = input.nextInt();
             System.out.println();
-            Matrix m1 = null;
+            MatrixOperasi m1 = null;
 
             if (pil2 == 1) {
                 System.out.println("1. Masukan Matrix Biasa");
@@ -55,7 +55,7 @@ public class Main {
                     return;
                 }
 
-                m1 = new Matrix(m, m.length, m[0].length);
+                m1 = new MatrixOperasi(m, m.length, m[0].length);
             } else if (pil2 == 2) {
                 m1 = MatrixInput.fileMatrix();
             }
@@ -97,7 +97,7 @@ public class Main {
             System.out.print("Pilih metode input: ");
             pil2 = input.nextInt();
             System.out.println();
-            Matrix m1 = null;
+            MatrixOperasi m1 = null;
 
             if (pil2 == 1) {
                 System.out.println("=== Menu Pilihan Matrix ===");
@@ -119,7 +119,7 @@ public class Main {
                     return;
                 }
 
-                m1 = new Matrix(m, m.length, m[0].length);
+                m1 = new MatrixOperasi(m, m.length, m[0].length);
             } else if (pil2 == 2) {
                 m1 = MatrixInput.fileMatrix();
             }
@@ -154,7 +154,7 @@ public class Main {
             System.out.print("Pilih metode input: ");
             pil2 = input.nextInt();
             System.out.println();
-            Matrix m1 = null;
+            MatrixOperasi m1 = null;
 
             if (pil2 == 1) {
                 System.out.println("=== Menu Pilihan Matrix ===");
@@ -176,13 +176,14 @@ public class Main {
                     return;
                 }
 
-                m1 = new Matrix(m, m.length, m[0].length);
+                m1 = new MatrixOperasi(m, m.length, m[0].length);
             } else if (pil2 == 2) {
                 m1 = MatrixInput.fileMatrix();
             }
 
             switch (pil1) {
                 case 1:
+                    System.out.println("ini masih dalam bentuk invers bukan dalam SPL");
                     Invers.inversOBE(m1);
                     break;
                 case 2:
@@ -194,13 +195,13 @@ public class Main {
                     return;
             }
         }
+        
 
 
 
 
 
-
-
+        
         else {
             System.out.println("Fitur lain belum tersedia.");
         }

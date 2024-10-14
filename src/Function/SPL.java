@@ -5,13 +5,13 @@ import java.io.InputStreamReader;
 
 public class SPL {
 
-    public static void gaussSPL (Matrix matrix) {
+    public static void gaussSPL (MatrixOperasi matrix) {
         // BufferedReader inputFile = new BufferedReader(new InputStreamReader(System.in));
         //Melakukan eliminasi gauss 
-        matrix = Matrix.gaussElimination(matrix);
+        matrix = MatrixOperasi.gaussElimination(matrix);
         double x[] = new double[matrix.getRowEff()];
         //Menganalisis matriks hasil eliminasi gauss apakah memiliki solusi tidak ada, unik atau banyak
-        int solutionType = Matrix.solutionType(matrix);
+        int solutionType = MatrixOperasi.solutionType(matrix);
         //Matrix.backSubstitution(matrix, X);
         MatrixOutput.printMatrix(matrix);
         System.out.println();
@@ -19,7 +19,7 @@ public class SPL {
             System.out.println("Solusi tidak ada.");
         } 
         else if (solutionType == 1) {
-            Matrix.backSubstitution(matrix, x);
+            MatrixOperasi.backSubstitution(matrix, x);
             System.out.println("Solusi tunggal:");
             for (int i = 0; i < matrix.getRowEff(); i++) {
                 System.out.printf("X[%d] = %.4f%n", i + 1, x[i]);
@@ -28,16 +28,16 @@ public class SPL {
         } else {
                 //Jika solusi berupa parametrik maka memanggil fungsi solusi parametrik
                 System.out.println("Solusi banyak (parametrik): ");
-                Matrix.solveManySolution(matrix);
+                MatrixOperasi.solveManySolution(matrix);
         }
     }
 
-    public static void gaussJordanSPL (Matrix Mgaussjordan) {
+    public static void gaussJordanSPL (MatrixOperasi Mgaussjordan) {
         // BufferedReader inputFile = new BufferedReader(new InputStreamReader(System.in));
         //Melakukan eliminasi gauss jordan
-        Mgaussjordan = Matrix.gaussJordanElimination(Mgaussjordan);
+        Mgaussjordan = MatrixOperasi.gaussJordanElimination(Mgaussjordan);
         //Menganalisis matriks hasil eliminasi gauss apakah memiliki solusi tidak ada, unik atau banyak
-        int solutionType = Matrix.solutionType(Mgaussjordan);
+        int solutionType = MatrixOperasi.solutionType(Mgaussjordan);
         //Matrix.backSubstitution(Mgauss, X);
         MatrixOutput.printMatrix(Mgaussjordan);
         System.out.println();
@@ -54,17 +54,17 @@ public class SPL {
         } else {
                 //Jika solusi berupa parametrik maka memanggil fungsi solusi parametrik
                 System.out.println("Solusi banyak (parametrik):");
-                Matrix.solveManySolution(Mgaussjordan);
+                MatrixOperasi.solveManySolution(Mgaussjordan);
         }
     }
 
-    public static void cramerSPL (Matrix m){
-        Matrix matMain;
-        Matrix matRes;
-        Matrix temp;
+    public static void cramerSPL (MatrixOperasi m){
+        MatrixOperasi matMain;
+        MatrixOperasi matRes;
+        MatrixOperasi temp;
         
-        matMain = new Matrix(m.getRowEff(), m.getColEff()-1);
-        matRes = new Matrix(m.getRowEff(), 1);
+        matMain = new MatrixOperasi(m.getRowEff(), m.getColEff()-1);
+        matRes = new MatrixOperasi(m.getRowEff(), 1);
 
         // Pengisian setiap matrix
         for (int i=0; i<m.getRowEff(); i++){
@@ -87,7 +87,7 @@ public class SPL {
         }
         else {
             for (int i=0; i<matMain.getRowEff(); i++){
-                temp = new Matrix(matMain.matrix, matMain.getRowEff(), matMain.getColEff());
+                temp = new MatrixOperasi(matMain.matrix, matMain.getRowEff(), matMain.getColEff());
                 for (int j=0; j<matMain.getColEff(); j++){
                     temp.setElmt(j, i, matRes.getElmt(j,0));
                 }
@@ -101,9 +101,9 @@ public class SPL {
         }
     }
 
-    public static void inversSPL(Matrix m) {
+    public static void inversSPL(MatrixOperasi m) {
         int n = m.getRowEff(); // Assuming it's a square matrix
-        Matrix identity = Matrix.createIdentity(n);
+        MatrixOperasi identity = MatrixOperasi.createIdentity(n);
 
         // Perform the Gauss-Jordan elimination to get the inverse
         for (int i = 0; i < n; i++) {
