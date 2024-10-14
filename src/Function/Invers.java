@@ -29,25 +29,27 @@ public class Invers {
 
         // Perform the Gauss-Jordan elimination to get the inverse
         for (int i = 0; i < n; i++) {
-            double pivot = m.getElmt(i, i); // Get the pivot element
+            double pivot = m.getElmt(i, i); // Ambil elemen diagonal utama
+    
+            // Jika pivot 0, ini berarti matriks singular, tidak bisa dibalik
             if (pivot == 0) {
-                System.out.println("Pivot element is zero, cannot compute inverse.");
+                System.out.println("Matrix singular, tidak memiliki invers.");
                 return; // Handle zero pivot (not invertible)
             }
             
-            // Normalize the pivot row by dividing by the pivot
+            // Eliminasi elemen di atas dan di bawah pivot (kolom ke-i)
             for (int j = 0; j < n; j++) {
-                m.setElmt(i, j, m.getElmt(i, j) / pivot); // Update matrix m
-                identity.setElmt(i, j, identity.getElmt(i, j) / pivot); // Update identity matrix
+                m.setElmt(i, j, m.getElmt(i, j) / pivot); 
+                identity.setElmt(i, j, identity.getElmt(i, j) / pivot); 
             }
 
-            // Eliminate the other rows
+            // Eliminasi elemen di atas dan di bawah pivot (kolom ke-i)
             for (int k = 0; k < n; k++) {
                 if (k != i) {
-                    double factor = m.getElmt(k, i); // Get the factor to eliminate
+                    double factor = m.getElmt(k, i);
                     for (int j = 0; j < n; j++) {
-                        m.setElmt(k, j, m.getElmt(k, j) - factor * m.getElmt(i, j)); // Update matrix m
-                        identity.setElmt(k, j, identity.getElmt(k, j) - factor * identity.getElmt(i, j)); // Update identity matrix
+                        m.setElmt(k, j, m.getElmt(k, j) - factor * m.getElmt(i, j)); 
+                        identity.setElmt(k, j, identity.getElmt(k, j) - factor * identity.getElmt(i, j)); 
                     }
                 }
             }

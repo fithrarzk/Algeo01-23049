@@ -13,6 +13,7 @@ public class SPL {
         //Menganalisis matriks hasil eliminasi gauss apakah memiliki solusi tidak ada, unik atau banyak
         int solutionType = Matrix.solutionType(matrix);
         //Matrix.backSubstitution(matrix, X);
+        System.out.println("Hasil Matrix Setelah Gauss Elimination");
         MatrixOutput.printMatrix(matrix);
         System.out.println();
         if (solutionType == 0) {
@@ -28,7 +29,7 @@ public class SPL {
         } else {
                 //Jika solusi berupa parametrik maka memanggil fungsi solusi parametrik
                 System.out.println("Solusi banyak (parametrik): ");
-                Matrix.solveManySolution(matrix);
+                Matrix.parametrik(matrix);
         }
     }
 
@@ -39,6 +40,7 @@ public class SPL {
         //Menganalisis matriks hasil eliminasi gauss apakah memiliki solusi tidak ada, unik atau banyak
         int solutionType = Matrix.solutionType(Mgaussjordan);
         //Matrix.backSubstitution(Mgauss, X);
+        System.out.println("Hasil Matrix Setelah Gauss Jordan Elimination");
         MatrixOutput.printMatrix(Mgaussjordan);
         System.out.println();
         if (solutionType == 0) {
@@ -54,7 +56,7 @@ public class SPL {
         } else {
                 //Jika solusi berupa parametrik maka memanggil fungsi solusi parametrik
                 System.out.println("Solusi banyak (parametrik):");
-                Matrix.solveManySolution(Mgaussjordan);
+                Matrix.parametrik(Mgaussjordan);
         }
     }
 
@@ -102,34 +104,39 @@ public class SPL {
     }
 
     public static void inversSPL(Matrix m) {
-        int n = m.getRowEff(); // Assuming it's a square matrix
-        Matrix identity = Matrix.createIdentity(n);
-
-        // Perform the Gauss-Jordan elimination to get the inverse
-        for (int i = 0; i < n; i++) {
-            double pivot = m.getElmt(i, i); // Get the pivot element
-            if (pivot == 0) {
-                System.out.println("Pivot element is zero, cannot compute inverse.");
-                return; // Handle zero pivot (not invertible)
-            }
-            
-            // Normalize the pivot row by dividing by the pivot
-            for (int j = 0; j < n; j++) {
-                m.setElmt(i, j, m.getElmt(i, j) / pivot); // Update matrix m
-                identity.setElmt(i, j, identity.getElmt(i, j) / pivot); // Update identity matrix
-            }
-
-            // Eliminate the other rows
-            for (int k = 0; k < n; k++) {
-                if (k != i) {
-                    double factor = m.getElmt(k, i); // Get the factor to eliminate
-                    for (int j = 0; j < n; j++) {
-                        m.setElmt(k, j, m.getElmt(k, j) - factor * m.getElmt(i, j)); // Update matrix m
-                        identity.setElmt(k, j, identity.getElmt(k, j) - factor * identity.getElmt(i, j)); // Update identity matrix
-                    }
+        Matrix matMain, matRes;
+        matMain = new Matrix (m.getRowEff(), m.getColEff()-1);
+        matRes = new Matrix (m.getRowEff(), 1);
+        
+        if (!Matrix.isSquare(matMain)){
+            System.out.println("Persamaan tidak dapat diselesaikan dengan metode invers SPL karena matrix koefisien bukan matrix persegi sehingga invers tidak dapat ditentukan.");
+            return;
+        }
+        // Pengisian setiap matrix
+        for (int i=0; i<m.getRowEff(); i++){
+            for (int j=0; j<m.getColEff(); j++){
+                if (j!=m.getColEff()-1){
+                    matMain.setElmt(i, j, m.getElmt(i, j));
+                }
+                else {
+                    matRes.setElmt(i, 0, m.getElmt(i, j));
                 }
             }
         }
-        MatrixOutput.printMatrix(identity);
+        
+        Matrix matMainInvers=Invers.inversAdjoin(matMain);
+        if (matMainInvers==null){
+            System.out.println("SPL tidak dapat diselesaikan dengan matriks balikan karena nilai balikan matriks tidak terdefinisi.");
+        }
+        else {
+            Matrix Result = new Matrix (m.getRowEff(), 1);
+            Result = Matrix.multiplyMatrix(matMainInvers, matRes);
+            //MatrixOutput.printMatrix(matMainInvers);
+
+            for (int i=1; i<=m.getRowEff(); i++){
+                System.out.printf("X%d = %.4f\n", (i), Result.getElmt(i-1,0));
+            }
+            //MatrixOutput.printMatrix(Result);
+        }
     }
 }

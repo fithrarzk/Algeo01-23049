@@ -12,7 +12,7 @@ public class Determinan {
 
         // Kasus bukan matriks persegi
         if (!Matrix.isSquare(m)) {
-            System.out.println("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan");
+            //System.out.println("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan.");
             return m.MARK;
         }
 
@@ -53,7 +53,7 @@ public class Determinan {
             return 1;
         }
         if (!Matrix.isSquare(m)) {
-            System.out.println("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan");
+            //System.out.println("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan");
             return m.MARK;
         }
         

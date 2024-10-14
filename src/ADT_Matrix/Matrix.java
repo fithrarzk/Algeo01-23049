@@ -139,6 +139,9 @@ public class Matrix {
         m = matrix.getColEff();
         augmentedColumns = m - 1;  // Kolom augmented (tanpa kolom hasil persamaan)
         
+        if (m-1>n){
+            return 2;
+        }
         for (i = 0; i < n; i++) {
             boolean isZeroRowMain = true; // Asumsi awal bahwa baris utama bernilai 0 semua
             
@@ -167,8 +170,8 @@ public class Matrix {
         // Tentukan jenis solusi berdasarkan kondisi yang telah diperiksa
         if (inconsistent) {
             return 0;  // Tidak ada solusi
-        } else if (hasZeroRowAugmented) {
-            return 2;  // Solusi tak hingga
+        }else if (m-1>n && !inconsistent ||hasZeroRowAugmented){
+            return 2; // Solusi tak hingga
         } else if (hasAllDiagonalsOne) {
             return 1;  // Solusi tunggal
         }
@@ -243,6 +246,79 @@ public class Matrix {
                 }
             }
         }
+    }
+
+    public static boolean KolomNol(Matrix m, int idxCol) {
+        for (int i = 0; i < m.getRowEff(); i++) {
+            if (m.getElmt(i,idxCol) != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static String[] parametrik(Matrix m) {
+        String[] solusi = new String[m.getColEff() - 1];
+        String[] par = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+        int i, j, a, b;
+        int x = 0;
+    
+        for (j = 0; j < m.getColEff() - 1; j++) {
+            StringBuilder result = new StringBuilder();
+            if (KolomNol(m, j)) {
+                solusi[x] = par[x];
+                x++;
+            } else {
+                // cek apakah elemen itu leading one
+                for (i = m.getRowEff() - 1; i >= 0; i--) {
+                    if (m.getElmt(i,j) != 0) {
+                        for (b = 0; b < m.getColEff() - 1; b++) {
+                            if (m.getElmt(i,b) != 0) {
+                                break;
+                            }
+                        } // b adalah indeks leading one
+                        if (j != b) { // kalau dia bukan leading one
+                            solusi[x] = par[x];
+                            x++;
+                        } else { // kalau dia leading one
+                            if (m.getElmt(i,m.getColEff()-1) != 0) {
+                                result.append(String.format("%.3f", m.getElmt(i,m.getColEff()-1)));
+                            }
+                            for (a = b + 1; a < m.getColEff() - 1; a++) {
+                                if (m.getElmt(i,a) > 0) {
+                                    result.append(" - ").append(String.format("%.3f", m.getElmt(i,a))).append("x").append(a + 1);
+                                } else if (m.getElmt(i,a) < 0 && m.getElmt(i,m.getColEff()-1) != 0) {
+                                    result.append(" + ").append(String.format("%.3f", (-1 * m.getElmt(i,a)))).append("x").append(a + 1);
+                                } else if (m.getElmt(i,a) < 0 && m.getElmt(i,m.getColEff()-1) == 0) {
+                                    result.append("").append(String.format("%.3f", (-1 * m.getElmt(i,a)))).append("x").append(a + 1);
+                                }
+                            }
+                            solusi[x] = result.toString();
+                            x++;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        for (int y = 0; y < (m.getColEff()) - 1; y++) {
+            System.out.printf("x%d = ", y+1);
+            System.out.println(solusi[y]);
+        }
+        
+        for (int w = 0; w < x; w++) {
+            // Cek apakah solusi mengandung variabel lain
+            String currentSolution = solusi[w];
+            for (int e = 0; e < x; e++) {
+                // Ganti variabel lain yang merupakan parameter
+                if (currentSolution.contains("x" + (e + 1)) && w != e) {
+                    currentSolution = currentSolution.replace("x" + (e + 1), par[e]); // Mengganti x dengan parameter
+                }
+            }
+            solusi[w] = currentSolution; // Update solusi dengan substitusi
+        }
+    
+        return solusi;
     }
 
     public static void backSubstitution(Matrix matrix, double[] X) {
@@ -481,6 +557,24 @@ public class Matrix {
             }
         }
         return mAdjoin;
+    }
+
+    public static Matrix multiplyMatrix(Matrix m1, Matrix m2){
+        int i, j, k;
+        double temp;
+        Matrix MMultiply;
+
+        MMultiply = new Matrix(m1.row, m2.col);
+        for (i = 0; i < MMultiply.row; i++) {
+            for (j = 0; j < MMultiply.col; j++) {
+                temp = 0;
+                for(k = 0; k < m1.col; k++) {
+                    temp = temp + (m1.getElmt(i, k) * m2.getElmt(k, j));
+                }
+                MMultiply.setElmt(i, j, temp);
+            }
+        }
+        return MMultiply;
     }
 
 }

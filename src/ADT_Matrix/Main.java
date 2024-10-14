@@ -100,24 +100,8 @@ public class Main {
             Matrix m1 = null;
 
             if (pil2 == 1) {
-                System.out.println("=== Menu Pilihan Matrix ===");
-                System.out.println("1. Masukan Matrix Biasa");
-                System.out.println("2. Masukan Matrix Augmented");
-                System.out.print("Pilih jenis input: ");
-                pil3 = input.nextInt();
-                System.out.println();
-                
                 double[][] m = null;
-
-                if (pil3 == 1) {
-                    m = MatrixInput.normalMatrix();
-                } else if (pil3 == 2) {
-                    m = MatrixInput.augmentedMatrix();
-                } else {
-                    System.out.println("Pilihan tidak valid.");
-                    input.close();
-                    return;
-                }
+                m = MatrixInput.normalMatrix();
 
                 m1 = new Matrix(m, m.length, m[0].length);
             } else if (pil2 == 2) {
@@ -126,10 +110,22 @@ public class Main {
 
             switch (pil1) {
                 case 1:
-                    System.out.println("Hasil Determinan: " + Determinan.determinanKofaktor(m1));
+                    double det1=Determinan.determinanKofaktor(m1);
+                    if (Double.isNaN(det1)){
+                        System.out.println("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan.");
+                    }
+                    else{
+                        System.out.println("Hasil Determinan: " + Determinan.determinanKofaktor(m1));
+                    }
                     break;
                 case 2:
-                    System.out.println("Hasil Determinan: " + Determinan.determinanReduksi(m1));
+                    double det2=Determinan.determinanReduksi(m1);
+                    if (Double.isNaN(det2)){
+                        System.out.println("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan.");
+                    }
+                    else{
+                        System.out.println("Hasil Determinan: " + Determinan.determinanReduksi(m1));
+                    }
                     break;
                 default:
                     System.out.println("Pilihan tidak valid.");
@@ -157,24 +153,8 @@ public class Main {
             Matrix m1 = null;
 
             if (pil2 == 1) {
-                System.out.println("=== Menu Pilihan Matrix ===");
-                System.out.println("1. Masukan Matrix Biasa");
-                System.out.println("2. Masukan Matrix Augmented");
-                System.out.print("Pilih jenis input: ");
-                pil3 = input.nextInt();
-                System.out.println();
-                
                 double[][] m = null;
-
-                if (pil3 == 1) {
-                    m = MatrixInput.normalMatrix();
-                } else if (pil3 == 2) {
-                    m = MatrixInput.augmentedMatrix();
-                } else {
-                    System.out.println("Pilihan tidak valid.");
-                    input.close();
-                    return;
-                }
+                m = MatrixInput.normalMatrix();
 
                 m1 = new Matrix(m, m.length, m[0].length);
             } else if (pil2 == 2) {
@@ -186,7 +166,13 @@ public class Main {
                     Invers.inversOBE(m1);
                     break;
                 case 2:
-                    MatrixOutput.printMatrix(Invers.inversAdjoin(m1));
+                    Matrix inv = Invers.inversAdjoin(m1);
+                    if (inv==null){
+                        System.out.println("Matrix singular, tidak bisa dihitung inversenya.");
+                    }
+                    else {
+                        MatrixOutput.printMatrix(inv);
+                    }
                     break;
                 default:
                     System.out.println("Pilihan tidak valid.");
