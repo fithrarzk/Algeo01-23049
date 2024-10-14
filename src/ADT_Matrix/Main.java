@@ -59,7 +59,7 @@ public class Main {
             pil2 = input.nextInt();
             clearConsole();
             System.out.println();
-            Matrix m1 = null;
+            MatrixOperasi m1 = null;
 
             if (pil2 == 1) {
                 System.out.println("1. Masukan Matrix Biasa");
@@ -80,7 +80,7 @@ public class Main {
                     return;
                 }
 
-                m1 = new Matrix(m, m.length, m[0].length);
+                m1 = new MatrixOperasi(m, m.length, m[0].length);
             } else if (pil2 == 2) {
                 m1 = MatrixInput.fileMatrix();
             }
@@ -124,13 +124,13 @@ public class Main {
             pil2 = input.nextInt();
             clearConsole();
             System.out.println();
-            Matrix m1 = null;
+            MatrixOperasi m1 = null;
 
             if (pil2 == 1) {
                 double[][] m = null;
                 m = MatrixInput.normalMatrix();
 
-                m1 = new Matrix(m, m.length, m[0].length);
+                m1 = new MatrixOperasi(m, m.length, m[0].length);
             } else if (pil2 == 2) {
                 m1 = MatrixInput.fileMatrix();
             }
@@ -179,13 +179,13 @@ public class Main {
             pil2 = input.nextInt();
             clearConsole();
             System.out.println();
-            Matrix m1 = null;
+            MatrixOperasi m1 = null;
 
             if (pil2 == 1) {
                 double[][] m = null;
                 m = MatrixInput.normalMatrix();
 
-                m1 = new Matrix(m, m.length, m[0].length);
+                m1 = new MatrixOperasi(m, m.length, m[0].length);
             } else if (pil2 == 2) {
                 m1 = MatrixInput.fileMatrix();
             }
@@ -195,7 +195,7 @@ public class Main {
                     Invers.inversOBE(m1);
                     break;
                 case 2:
-                    Matrix inv = Invers.inversAdjoin(m1);
+                    MatrixOperasi inv = Invers.inversAdjoin(m1);
                     if (inv==null){
                         System.out.println("Matrix singular, tidak bisa dihitung inversenya.");
                     }

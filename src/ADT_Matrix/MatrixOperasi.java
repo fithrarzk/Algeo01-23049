@@ -2,21 +2,21 @@ package ADT_Matrix;
 
 import Function.Determinan;
 
-public class Matrix {
+public class MatrixOperasi {
     public int row;
     public int col;
     public double[][] matrix;
     public double MARK = Double.NaN;
 
     
-    public Matrix(double contents[][], int rows, int cols) {
+    public MatrixOperasi(double contents[][], int rows, int cols) {
         this.matrix = contents;
         this.row = rows;
         this.col = cols;
     }
     
 
-    public Matrix(int rows, int cols){
+    public MatrixOperasi(int rows, int cols){
         int i, j;
         matrix = new double[rows][cols];
         this.row = rows;
@@ -48,7 +48,7 @@ public class Matrix {
 
 
 
-    public static Matrix swapRow (Matrix m, int row1, int row2) {
+    public static MatrixOperasi swapRow (MatrixOperasi m, int row1, int row2) {
         for (int j = 0; j < m.getColEff(); j++) {
             double temp = m.getElmt(row1,j);
             m.setElmt(row1, j, m.getElmt(row2,j));
@@ -57,8 +57,8 @@ public class Matrix {
         return m;
     }
 
-    public static Matrix addRow (Matrix m, double[] newRow){
-        Matrix mTemp;
+    public static MatrixOperasi addRow (MatrixOperasi m, double[] newRow){
+        MatrixOperasi mTemp;
         double[][] matrix;
         int i, j;
 
@@ -71,16 +71,16 @@ public class Matrix {
         for(i = 0; i < m.col; i++){
             matrix[m.row][i] = newRow[i];
         }
-        mTemp = new Matrix(matrix, m.row+1, m.col);
+        mTemp = new MatrixOperasi(matrix, m.row+1, m.col);
         return mTemp;
     }
 
-    public static boolean isSquare (Matrix m){ //cek matrix nxn
+    public static boolean isSquare (MatrixOperasi m){ //cek matrix nxn
         return m.getColEff() == m.getRowEff();
     }
 
-    public static Matrix createIdentity(int n) {
-        Matrix identityMatrix = new Matrix(n, n);
+    public static MatrixOperasi createIdentity(int n) {
+        MatrixOperasi identityMatrix = new MatrixOperasi(n, n);
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (i == j) {
@@ -94,7 +94,7 @@ public class Matrix {
         return identityMatrix;
     }
     
-    public static boolean isIdentity(Matrix m){
+    public static boolean isIdentity(MatrixOperasi m){
         if(isSquare(m)){
             for (int i=0;i<m.getRowEff();i++){
                 for (int j=0;j<m.getColEff();j++){
@@ -114,7 +114,7 @@ public class Matrix {
         return false;
     }
 
-    public static int FirstElementNot0Coll(Matrix m, int startrowIdx, int colIdx) {
+    public static int FirstElementNot0Coll(MatrixOperasi m, int startrowIdx, int colIdx) {
         // Mengecek idx pertama saat elemen tidak bernilai 0 pada colIdx 
         int idx = startrowIdx;
         for (int rowIdx = startrowIdx; rowIdx < m.getRowEff(); rowIdx++){
@@ -127,7 +127,7 @@ public class Matrix {
     }
 
 
-    public static int solutionType(Matrix matrix) {
+    public static int solutionType(MatrixOperasi matrix) {
         int i, j;
         int n, m;
         int augmentedColumns;
@@ -179,7 +179,7 @@ public class Matrix {
         return -1; 
     }
     
-    public static void solveManySolution(Matrix matrix) {
+    public static void solveManySolution(MatrixOperasi matrix) {
         int nEff = matrix.getColEff() - 1;
         boolean[] visited = new boolean[nEff];
         char[] parametric = new char[nEff];
@@ -248,7 +248,7 @@ public class Matrix {
         }
     }
 
-    public static boolean KolomNol(Matrix m, int idxCol) {
+    public static boolean KolomNol(MatrixOperasi m, int idxCol) {
         for (int i = 0; i < m.getRowEff(); i++) {
             if (m.getElmt(i,idxCol) != 0) {
                 return false;
@@ -257,7 +257,7 @@ public class Matrix {
         return true;
     }
 
-    public static String[] parametrik(Matrix m) {
+    public static String[] parametrik(MatrixOperasi m) {
         String[] solusi = new String[m.getColEff() - 1];
         String[] par = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
         int i, j, a, b;
@@ -317,11 +317,10 @@ public class Matrix {
             }
             solusi[w] = currentSolution; // Update solusi dengan substitusi
         }
-    
         return solusi;
     }
 
-    public static void backSubstitution(Matrix matrix, double[] X) {
+    public static void backSubstitution(MatrixOperasi matrix, double[] X) {
         int i, j;
         int n, m;
         
@@ -341,7 +340,7 @@ public class Matrix {
     // ELIMINASI GEDE-GEDE
 
 
-    public static Matrix gaussElimination(Matrix matrix) {
+    public static MatrixOperasi gaussElimination(MatrixOperasi matrix) {
         int n = matrix.getRowEff();
         int m = matrix.getColEff();
         // double[] X = new double[n];
@@ -421,7 +420,7 @@ public class Matrix {
         return matrix;
     }
 
-    public static Matrix gaussJordanElimination(Matrix A) {
+    public static MatrixOperasi gaussJordanElimination(MatrixOperasi A) {
         int n = A.getRowEff();
         int m = A.getColEff();
     
@@ -498,9 +497,9 @@ public class Matrix {
     }
 
 
-    public static double detKofaktorRC(Matrix m, int row, int col) {
+    public static double detKofaktorRC(MatrixOperasi m, int row, int col) {
         int n = m.getRowEff();
-        Matrix temp = new Matrix(n-1, n-1); 
+        MatrixOperasi temp = new MatrixOperasi(n-1, n-1); 
         
         int tempRow = 0; //  baris pada matriks temp
         for (int i = 0; i < n; i++) {
@@ -526,11 +525,11 @@ public class Matrix {
     }
     
     // Matriks Kofaktor
-    public static Matrix matriksKofaktor (Matrix m){
+    public static MatrixOperasi matriksKofaktor (MatrixOperasi m){
         int n = m.getRowEff();
-        Matrix mKofaktor;
+        MatrixOperasi mKofaktor;
 
-		mKofaktor = new Matrix(n,n);
+		mKofaktor = new MatrixOperasi(n,n);
 		
 		for (int i = 0; i < n; i++){
 			for (int j = 0; j < n; j++){
@@ -544,12 +543,12 @@ public class Matrix {
     }
 
     // Matriks adjoin dari matrix kofaktor
-    public static Matrix Adjoin (Matrix m){
-        Matrix mAdjoin;
+    public static MatrixOperasi Adjoin (MatrixOperasi m){
+        MatrixOperasi mAdjoin;
         int i, j;
         
-        m = Matrix.matriksKofaktor(m);
-        mAdjoin = new Matrix(m.getRowEff(), m.getColEff());
+        m = MatrixOperasi.matriksKofaktor(m);
+        mAdjoin = new MatrixOperasi(m.getRowEff(), m.getColEff());
 
         for (i = 0; i < m.row; i++){
             for (j = 0; j < m.getColEff(); j++){
@@ -559,12 +558,12 @@ public class Matrix {
         return mAdjoin;
     }
 
-    public static Matrix multiplyMatrix(Matrix m1, Matrix m2){
+    public static MatrixOperasi multiplyMatrix(MatrixOperasi m1, MatrixOperasi m2){
         int i, j, k;
         double temp;
-        Matrix MMultiply;
+        MatrixOperasi MMultiply;
 
-        MMultiply = new Matrix(m1.row, m2.col);
+        MMultiply = new MatrixOperasi(m1.row, m2.col);
         for (i = 0; i < MMultiply.row; i++) {
             for (j = 0; j < MMultiply.col; j++) {
                 temp = 0;

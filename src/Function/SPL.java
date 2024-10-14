@@ -5,13 +5,13 @@ import java.io.InputStreamReader;
 
 public class SPL {
 
-    public static void gaussSPL (Matrix matrix) {
+    public static void gaussSPL (MatrixOperasi matrix) {
         // BufferedReader inputFile = new BufferedReader(new InputStreamReader(System.in));
         //Melakukan eliminasi gauss 
-        matrix = Matrix.gaussElimination(matrix);
+        matrix = MatrixOperasi.gaussElimination(matrix);
         double x[] = new double[matrix.getRowEff()];
         //Menganalisis matriks hasil eliminasi gauss apakah memiliki solusi tidak ada, unik atau banyak
-        int solutionType = Matrix.solutionType(matrix);
+        int solutionType = MatrixOperasi.solutionType(matrix);
         //Matrix.backSubstitution(matrix, X);
         System.out.println("Hasil Matrix Setelah Gauss Elimination");
         MatrixOutput.printMatrix(matrix);
@@ -20,7 +20,7 @@ public class SPL {
             System.out.println("Solusi tidak ada.");
         } 
         else if (solutionType == 1) {
-            Matrix.backSubstitution(matrix, x);
+            MatrixOperasi.backSubstitution(matrix, x);
             System.out.println("Solusi tunggal:");
             for (int i = 0; i < matrix.getRowEff(); i++) {
                 System.out.printf("X[%d] = %.4f%n", i + 1, x[i]);
@@ -29,16 +29,16 @@ public class SPL {
         } else {
                 //Jika solusi berupa parametrik maka memanggil fungsi solusi parametrik
                 System.out.println("Solusi banyak (parametrik): ");
-                Matrix.parametrik(matrix);
+                MatrixOperasi.parametrik(matrix);
         }
     }
 
-    public static void gaussJordanSPL (Matrix Mgaussjordan) {
+    public static void gaussJordanSPL (MatrixOperasi Mgaussjordan) {
         // BufferedReader inputFile = new BufferedReader(new InputStreamReader(System.in));
         //Melakukan eliminasi gauss jordan
-        Mgaussjordan = Matrix.gaussJordanElimination(Mgaussjordan);
+        Mgaussjordan = MatrixOperasi.gaussJordanElimination(Mgaussjordan);
         //Menganalisis matriks hasil eliminasi gauss apakah memiliki solusi tidak ada, unik atau banyak
-        int solutionType = Matrix.solutionType(Mgaussjordan);
+        int solutionType = MatrixOperasi.solutionType(Mgaussjordan);
         //Matrix.backSubstitution(Mgauss, X);
         System.out.println("Hasil Matrix Setelah Gauss Jordan Elimination");
         MatrixOutput.printMatrix(Mgaussjordan);
@@ -56,17 +56,19 @@ public class SPL {
         } else {
                 //Jika solusi berupa parametrik maka memanggil fungsi solusi parametrik
                 System.out.println("Solusi banyak (parametrik):");
-                Matrix.parametrik(Mgaussjordan);
+                MatrixOperasi.parametrik(Mgaussjordan);
         }
+
+
     }
 
-    public static void cramerSPL (Matrix m){
-        Matrix matMain;
-        Matrix matRes;
-        Matrix temp;
+    public static void cramerSPL (MatrixOperasi m){
+        MatrixOperasi matMain;
+        MatrixOperasi matRes;
+        MatrixOperasi temp;
         
-        matMain = new Matrix(m.getRowEff(), m.getColEff()-1);
-        matRes = new Matrix(m.getRowEff(), 1);
+        matMain = new MatrixOperasi(m.getRowEff(), m.getColEff()-1);
+        matRes = new MatrixOperasi(m.getRowEff(), 1);
 
         // Pengisian setiap matrix
         for (int i=0; i<m.getRowEff(); i++){
@@ -89,7 +91,7 @@ public class SPL {
         }
         else {
             for (int i=0; i<matMain.getRowEff(); i++){
-                temp = new Matrix(matMain.matrix, matMain.getRowEff(), matMain.getColEff());
+                temp = new MatrixOperasi(matMain.matrix, matMain.getRowEff(), matMain.getColEff());
                 for (int j=0; j<matMain.getColEff(); j++){
                     temp.setElmt(j, i, matRes.getElmt(j,0));
                 }
@@ -103,12 +105,12 @@ public class SPL {
         }
     }
 
-    public static void inversSPL(Matrix m) {
-        Matrix matMain, matRes;
-        matMain = new Matrix (m.getRowEff(), m.getColEff()-1);
-        matRes = new Matrix (m.getRowEff(), 1);
+    public static void inversSPL(MatrixOperasi m) {
+        MatrixOperasi matMain, matRes;
+        matMain = new MatrixOperasi (m.getRowEff(), m.getColEff()-1);
+        matRes = new MatrixOperasi (m.getRowEff(), 1);
         
-        if (!Matrix.isSquare(matMain)){
+        if (!MatrixOperasi.isSquare(matMain)){
             System.out.println("Persamaan tidak dapat diselesaikan dengan metode invers SPL karena matrix koefisien bukan matrix persegi sehingga invers tidak dapat ditentukan.");
             return;
         }
@@ -124,13 +126,13 @@ public class SPL {
             }
         }
         
-        Matrix matMainInvers=Invers.inversAdjoin(matMain);
+        MatrixOperasi matMainInvers=Invers.inversAdjoin(matMain);
         if (matMainInvers==null){
             System.out.println("SPL tidak dapat diselesaikan dengan matriks balikan karena nilai balikan matriks tidak terdefinisi.");
         }
         else {
-            Matrix Result = new Matrix (m.getRowEff(), 1);
-            Result = Matrix.multiplyMatrix(matMainInvers, matRes);
+            MatrixOperasi Result = new MatrixOperasi (m.getRowEff(), 1);
+            Result = MatrixOperasi.multiplyMatrix(matMainInvers, matRes);
             //MatrixOutput.printMatrix(matMainInvers);
 
             for (int i=1; i<=m.getRowEff(); i++){

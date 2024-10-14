@@ -5,13 +5,13 @@ import ADT_Matrix.*;
 
 public class Determinan {
     //Mencari determinan menggunakan ekspansi kofaktor
-    public static double determinanKofaktor(Matrix m) {
+    public static double determinanKofaktor(MatrixOperasi m) {
         int row = m.getRowEff();
         int col = m.getColEff();
         double det = 0;
 
         // Kasus bukan matriks persegi
-        if (!Matrix.isSquare(m)) {
+        if (!MatrixOperasi.isSquare(m)) {
             //System.out.println("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan.");
             return m.MARK;
         }
@@ -23,7 +23,7 @@ public class Determinan {
 
         // Kasus matriks berukuran mxm dengan m>=2
         for (int i = 0; i < col; i++) {
-            Matrix temp = new Matrix(row - 1, col - 1); // Buat matriks baru untuk kofaktor
+            MatrixOperasi temp = new MatrixOperasi(row - 1, col - 1); // Buat matriks baru untuk kofaktor
 
             // Buat matriks kofaktor
             for (int j = 1; j < row; j++) {
@@ -48,11 +48,11 @@ public class Determinan {
     }
 
     // Mencari Determinan dengan Reduksi Baris
-    public static double determinanReduksi(Matrix m){
-        if (Matrix.isIdentity(m)){
+    public static double determinanReduksi(MatrixOperasi m){
+        if (MatrixOperasi.isIdentity(m)){
             return 1;
         }
-        if (!Matrix.isSquare(m)) {
+        if (!MatrixOperasi.isSquare(m)) {
             //System.out.println("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan");
             return m.MARK;
         }
@@ -63,8 +63,8 @@ public class Determinan {
 
         // menukar baris untuk memindahkan elemen pertama yang tidak nol ke posisi diagonal
         for (int rowidx = 0; rowidx < n-1; rowidx++){
-            if (Matrix.FirstElementNot0Coll(m, rowidx, 0) != rowidx){
-                Matrix.swapRow(m, Matrix.FirstElementNot0Coll(m, rowidx, 0), rowidx);
+            if (MatrixOperasi.FirstElementNot0Coll(m, rowidx, 0) != rowidx){
+                MatrixOperasi.swapRow(m, MatrixOperasi.FirstElementNot0Coll(m, rowidx, 0), rowidx);
                 p++;
             }
         }
@@ -74,10 +74,10 @@ public class Determinan {
                 // Jika elemen di posisi (i, j) tidak nol, maka perlu mengeliminasi nilai tersebut
                 if (m.getElmt(i,j) != 0){
                     if (m.getElmt(i-1,j)==0){
-                        double faktor = (double) m.getElmt(i,j)/ m.getElmt(Matrix.FirstElementNot0Coll(m, 0, j),j);
+                        double faktor = (double) m.getElmt(i,j)/ m.getElmt(MatrixOperasi.FirstElementNot0Coll(m, 0, j),j);
                         for (int l = 0; l < n; l++)
                         {   
-                            double subs = m.getElmt(Matrix.FirstElementNot0Coll(m, 0, j),l) * faktor;
+                            double subs = m.getElmt(MatrixOperasi.FirstElementNot0Coll(m, 0, j),l) * faktor;
                             m.setElmt(i,l, m.getElmt(i,l)-subs);
                         }
                     }

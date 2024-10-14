@@ -1,13 +1,13 @@
 package Function;
 
-import ADT_Matrix.Matrix;
+import ADT_Matrix.MatrixOperasi;
 import ADT_Matrix.MatrixOutput;
 
 public class Invers {
-    public static Matrix inversAdjoin (Matrix m){
+    public static MatrixOperasi inversAdjoin (MatrixOperasi m){
 		int i, j;
 		// mencari matriks adjoin
-		Matrix mAdjoin = Matrix.Adjoin(m);
+		MatrixOperasi mAdjoin = MatrixOperasi.Adjoin(m);
 		double det = Determinan.determinanKofaktor(m);
 		if (det==0){
             return null;
@@ -23,9 +23,9 @@ public class Invers {
         }
 	}
 
-    public static void inversOBE(Matrix m) {
+    public static void inversOBE(MatrixOperasi m) {
         int n = m.getRowEff(); // Assuming it's a square matrix
-        Matrix identity = Matrix.createIdentity(n);
+        MatrixOperasi identity = MatrixOperasi.createIdentity(n);
 
         // Perform the Gauss-Jordan elimination to get the inverse
         for (int i = 0; i < n; i++) {
@@ -56,6 +56,5 @@ public class Invers {
         }
         MatrixOutput.printMatrix(identity);
     }
-    
 }
 
