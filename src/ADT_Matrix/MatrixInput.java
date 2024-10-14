@@ -72,9 +72,9 @@ public class MatrixInput {
 
 
 
-    public static Matrix fileMatrix(){
+    public static MatrixOperasi fileMatrix(){
         int i;
-        Matrix matrix;
+        MatrixOperasi matrix;
         // Input Nama File
         Scanner input = new Scanner(System.in);
         System.out.print("Masukkan nama file: ");
@@ -108,7 +108,7 @@ public class MatrixInput {
                 mTemp[0][i] = y[i];
             }
             // Membuat matriks 
-            matrix = new Matrix(mTemp, 1, y.length);
+            matrix = new MatrixOperasi(mTemp, 1, y.length);
 
             while((s = br.readLine()) != null){
                 x = s.split("\\s+");
@@ -125,9 +125,9 @@ public class MatrixInput {
                             z[i] = y[i];
                         }
                     }
-                    matrix = Matrix.addRow(matrix, z);
+                    matrix = MatrixOperasi.addRow(matrix, z);
                 }else{
-                    matrix = Matrix.addRow(matrix, y);
+                    matrix = MatrixOperasi.addRow(matrix, y);
                 }
             }
             br.close();
@@ -137,7 +137,7 @@ public class MatrixInput {
         }catch(Exception ex){
             System.out.println("File not found");
             System.out.println("Returning a matrix with no value");
-            matrix = new Matrix(1, 1);
+            matrix = new MatrixOperasi(1, 1);
             return matrix;
         }
     }
