@@ -41,6 +41,10 @@ public class MatrixOperasi {
         return this.row;
     }
 
+    public int getLastIdxCol() {
+        return getColEff() - 1; // Menggunakan metode getColEff untuk mendapatkan jumlah kolom
+    }
+
 
     public double getElmt(int i, int j){
         return this.matrix[i][j];
@@ -55,6 +59,15 @@ public class MatrixOperasi {
             m.setElmt(row2, j, temp);
         }
         return m;
+    }
+
+    public void rowSwap(MatrixOperasi m, int rows1, int rows2){
+		double temp;
+		for (int i = 0; i < m.getColEff(); i++){
+			temp = m.getElmt(rows1, i);
+			m.setElmt(rows1, i, m.getElmt(rows2, i));
+			m.setElmt(rows2, i, temp);
+		}
     }
 
     public static MatrixOperasi addRow (MatrixOperasi m, double[] newRow){

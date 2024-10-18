@@ -1,7 +1,9 @@
 package ADT_Matrix;
 
 import java.util.Scanner;
+import java.util.Locale;
 import Function.*;
+// import java.util.InputMismatchException;
 
 public class Main {
 
@@ -192,8 +194,13 @@ public class Main {
 
             switch (pil1) {
                 case 1:
-                    Invers.inversOBE(m1);
-                    break;
+                    MatrixOperasi hasil = Invers.inversIdentitas(m1);
+                    if (Determinan.determinanReduksi(m1) != 0){ 
+                        MatrixOutput.printMatrix(hasil);
+                    }
+                    else{
+                    System.out.println("Invers tidak ada.");
+                    }
                 case 2:
                     MatrixOperasi inv = Invers.inversAdjoin(m1);
                     if (inv==null){
@@ -208,6 +215,39 @@ public class Main {
                     input.close();
                     return;
             }
+        }
+
+        else if (pilihan == 4){
+            System.out.println("=== Menu Input ===");
+            System.out.println("1. Masukan dari Keyboard");
+            System.out.println("2. Masukan dari File");
+            System.out.print("Pilih metode input: ");
+            pil2 = input.nextInt();
+            while (pil2 < 1 || pil2 > 2){
+                pil2 = input.nextInt();
+            }
+            if (pil2 == 1){
+                double[][]m = MatrixInput.readInterpolasiKeyboard();
+                MatrixOperasi m1 = new MatrixOperasi(m, m.length, m[0].length+1);
+                System.out.print("Masukkan nilai x yang akan ditaksir: ");
+                input.useLocale(Locale.US);
+                double xToEstimate = input.nextDouble();
+                MatrixOperasi inter = InterpolasiPolinomial.InterPolim(m1, false);
+                InterpolasiPolinomial.runInterpolasi(inter, xToEstimate);
+
+            }
+            else if (pil2 == 2){
+                MatrixOperasi m = MatrixInput.fileMatrix();
+                MatrixOperasi inter = InterpolasiPolinomial.InterPolim(m, true);
+                InterpolasiPolinomial.runInterpolasi(inter, m.getElmt(m.getRowEff()-1, 0));
+            }
+
+        }
+
+        else if (pilihan == 5){
+            MatrixOperasi m = MatrixInput.fileMatrix();
+            MatrixOutput.printMatrix(m);
+            BicubicInterpolation.bicubicInterpolation(m);
         }
 
 

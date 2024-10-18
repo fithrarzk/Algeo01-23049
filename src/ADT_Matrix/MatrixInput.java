@@ -1,10 +1,11 @@
 package ADT_Matrix;
-//import java.util.*;
+import java.util.*;
 import java.io.*;
-//import java.nio.file.Paths;
-import java.util.Scanner;
+import java.nio.file.Paths;
 
 public class MatrixInput {
+
+    public static Scanner input = new Scanner(System.in).useLocale(Locale.US);
 
     public static double[][] normalMatrix() { //Input Biasa
             Scanner scanner = new Scanner(System.in);
@@ -79,7 +80,7 @@ public class MatrixInput {
         Scanner input = new Scanner(System.in);
         System.out.print("Masukkan nama file: ");
         String file = input.nextLine();
-        String path = "test/Input/" + file;
+        String path = "test/input/" + file;
         System.out.println(path);
 
         // Mencari File
@@ -179,6 +180,34 @@ public class MatrixInput {
     //         return matrix;
     //     }
     // }
+
+    // private static Scanner input = new Scanner(System.in).useLocale(Locale.US);
+
+    public static double[][] readInterpolasiKeyboard(){
+        int i, j;
+        int n;
+        double [][] matrix;
+
+        // Input Derajat Polinom
+        System.out.print("Masukkan derajat polinom (n): ");
+        n = input.nextInt();
+
+        // Membuat Matriks dengan Titik X dan Y
+        matrix = new double[n + 1][2];
+        System.out.println("Masukkan titik x dan y: ");
+        for(i = 0; i < n + 1; i++){
+            for(j = 0; j < 2; j++){
+                matrix[i][j] = input.nextDouble(); // Membaca angka dengan titik sebagai pemisah desimal
+            }
+        }
+        MatrixOperasi m = new MatrixOperasi(matrix, n+1, 2);
+        //System.out.println("\nini hasilnya\n");
+        //MatrixOutput.printMatrix(m);
+        
+        return matrix;
+    }
+
+
 }
 
 

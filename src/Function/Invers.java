@@ -1,9 +1,12 @@
 package Function;
 
 import ADT_Matrix.MatrixOperasi;
-import ADT_Matrix.MatrixOutput;
+//import ADT_Matrix.MatrixOutput;
 
 public class Invers {
+
+    public double matrix [][];
+
     public static MatrixOperasi inversAdjoin (MatrixOperasi m){
 		int i, j;
 		// mencari matriks adjoin
@@ -23,6 +26,7 @@ public class Invers {
         }
 	}
 
+    /*  
     public static void inversOBE(MatrixOperasi m) {
         int n = m.getRowEff(); // Assuming it's a square matrix
         MatrixOperasi identity = MatrixOperasi.createIdentity(n);
@@ -56,5 +60,65 @@ public class Invers {
         }
         MatrixOutput.printMatrix(identity);
     }
+    */
+
+    public static MatrixOperasi inversIdentitas (MatrixOperasi m){
+        int i, j, k;
+        MatrixOperasi invers;
+
+		// membuat matriks baru dengan ukuran kolom 2 kali lebih besar
+		invers = new MatrixOperasi(m.getRowEff(), m.getColEff()*2);
+		
+		// mengisi matriks dengan matriks identitas dan matriks input
+		for (i = 0; i < m.getRowEff(); i++){
+			for (j = 0; j < m.getColEff(); j++){
+				if (i == j){
+					invers.setElmt(i, j+m.getColEff(), 1);
+				}
+				else{
+					invers.setElmt(i, j+m.getColEff(), 0);
+				}
+				invers.setElmt(i, j, m.getElmt(i,j));
+			}
+		}
+		// mengeloop sehingga mendapatkan invers
+		for (i = 0; i < invers.getRowEff(); i++){
+			for (j = 0; j < invers.getRowEff(); j++){
+				if (i != j){
+					k = (i + 1);
+					if (invers.getElmt(i,i) == 0){
+						while (k < invers.getRowEff()){
+							if (invers.getElmt(k,i) != 0){
+								// menukar baris
+								invers.swapRow(invers, i, k);
+							}
+							k++;
+						}
+					}
+
+					double sub = -1 * invers.getElmt(j, i) / invers.getElmt(i, i);
+					for (k = i; k < invers.getColEff(); k++){
+						invers.setElmt(j, k, (invers.getElmt(j,k)+sub*invers.getElmt(i,k)));
+					}
+				}
+			}
+		}
+
+		for (i = 0; i < invers.getRowEff(); i++){
+			double divisor = invers.getElmt(i,i);
+			for (j = 0; j < invers.getColEff(); j++){
+				if (invers.getElmt(i,j) != 0){
+					invers.setElmt(i, j, invers.getElmt(i,j) / divisor);
+				}
+			}
+		}
+
+		for (i = 0; i < m.getRowEff(); i++){
+			for (j = 0; j < m.getColEff(); j++){
+				m.setElmt(i, j, (invers.getElmt(i, j+m.getColEff())));
+			}
+		}
+		return m;
+	}
 }
 
