@@ -1,6 +1,10 @@
 package ADT_Matrix;
 
 import java.util.Scanner;
+
+import ADTMatrix.InputMatrix;
+import ADTMatrix.Matrix;
+
 import java.util.Locale;
 import Function.*;
 // import java.util.InputMismatchException;
@@ -148,7 +152,7 @@ public class Main {
                     }
                     break;
                 case 2:
-                    double det2=Determinan.determinanReduksi(m1);
+                    double det2= Determinan.determinanReduksi(m1);
                     if (Double.isNaN(det2)){
                         System.out.println("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan.");
                     }
@@ -250,12 +254,50 @@ public class Main {
             BicubicInterpolation.bicubicInterpolation(m);
         }
 
+        else if (pilihan == 6) {
+            System.out.println("=== Menu Sistem Regresi ===");
+            System.out.println("1. Regresi Linier");
+            System.out.println("2. Regresi Kuadratik");
+            System.out.print("Pilih metode: ");
+            pil1 = input.nextInt();
+            clearConsole();
+            System.out.println();
+            if (pil1 == 1) {
+                System.out.println("=== Menu Input ===");
+                System.out.println("1. Masukan dari Keyboard");
+                System.out.println("2. Masukan dari File");
+                System.out.print("Pilih metode input: ");
+                pil2 = input.nextInt();
+                boolean isquad = false;
+                if (pil2 == 1) {
+                    double[][]m = MatrixInput.RegresiMatrix(isquad);
+                    Matrix m1 = new Matrix(m, m.length, m[0].length);
+                    Regresi.regresiLinearKeyboard(m1);
+                }
+                else if (pil2 == 2) {
+                    Matrix m = InputMatrix.readMatrixFile();
+                    Regresi.regresiLinearFile(m);
+                }
+            }
+            else if (pil1==2) {
+                System.out.println("=== Menu Input ===");
+                System.out.println("1. Masukan dari Keyboard");
+                System.out.println("2. Masukan dari File");
+                System.out.print("Pilih metode input: ");
+                pil2 = input.nextInt();
+                boolean isquad = true;
+                if (pil2 == 1) {
+                    double[][]m = MatrixInput.RegresiMatrix(isquad);
+                    Matrix m1 = new Matrix(m, m.length, m[0].length);
+                    Regresi.regresiLinearQuadraticKeyboard(m1);
+                }
+                else if (pil2 == 2) {
+                    Matrix m = InputMatrix.readMatrixFile();
+                    Regresi.regresiLinearQuadraticFile(m);
+                }
+            }
 
-
-
-
-
-
+        }
         else {
             System.out.println("Fitur lain belum tersedia.");
         }
