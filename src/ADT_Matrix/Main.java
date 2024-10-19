@@ -250,11 +250,50 @@ public class Main {
             BicubicInterpolation.bicubicInterpolation(m);
         }
 
+        else if (pilihan == 6) {
+            System.out.println("=== Menu Sistem Regresi ===");
+            System.out.println("1. Regresi Linier");
+            System.out.println("2. Regresi Kuadratik");
+            System.out.print("Pilih metode: ");
+            pil1 = input.nextInt();
+            clearConsole();
+            System.out.println();
+            if (pil1 == 1) {
+                System.out.println("=== Menu Input ===");
+                System.out.println("1. Masukan dari Keyboard");
+                System.out.println("2. Masukan dari File");
+                System.out.print("Pilih metode input: ");
+                pil2 = input.nextInt();
+                boolean isquad = false;
+                if (pil2 == 1) {
+                    double[][]m = MatrixInput.regresiMatrix(isquad);
+                    MatrixOperasi m1 = new MatrixOperasi(m, m.length, m[0].length);
+                    Regresi.regresiLinearKeyboard(m1);
+                }
+                else if (pil2 == 2) {
+                    MatrixOperasi m = MatrixInput.fileMatrix();
+                    Regresi.regresiLinearFile(m);
+                }
+            }
+            else if (pil1==2) {
+                System.out.println("=== Menu Input ===");
+                System.out.println("1. Masukan dari Keyboard");
+                System.out.println("2. Masukan dari File");
+                System.out.print("Pilih metode input: ");
+                pil2 = input.nextInt();
+                boolean isquad = true;
+                if (pil2 == 1) {
+                    double[][]m = MatrixInput.regresiMatrix(isquad);
+                    MatrixOperasi m1 = new MatrixOperasi(m, m.length, m[0].length);
+                    Regresi.regresiLinearQuadraticKeyboard(m1);
+                }
+                else if (pil2 == 2) {
+                    MatrixOperasi m = MatrixInput.fileMatrix();
+                    Regresi.regresiLinearQuadraticFile(m);
+                }
+            }
 
-
-
-
-
+        }
 
         else {
             System.out.println("Fitur lain belum tersedia.");

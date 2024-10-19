@@ -207,6 +207,38 @@ public class MatrixInput {
         return matrix;
     }
 
+    public static double[][] regresiMatrix(boolean isQuadratic) {
+        int i, j;
+        int n, m;
+        double[][] matrix;
+    
+        // Input Jumlah Peubah dan Sampel
+        System.out.print("Masukkan jumlah peubah (x): ");
+        n = input.nextInt();
+        System.out.print("Masukkan jumlah sampel (m): ");
+        m = input.nextInt();
+    
+        // Tentukan ukuran matriks berdasarkan tipe regresi
+        if (isQuadratic) {
+            matrix = new double[m][2 * n + 1]; // 2 * n untuk x dan x^2, dan 1 untuk y
+        } else {
+            matrix = new double[m][n + 1]; // n untuk x dan 1 untuk y
+        }
+    
+        // Membuat Matriks dengan Titik X dan Y
+        System.out.println("Masukkan titik x dan y: ");
+        for (i = 0; i < m; i++) {
+            for (j = 0; j < n + 1; j++) {
+                matrix[i][j] = input.nextDouble();
+    
+                // Jika regresi kuadratik, tambahkan nilai kuadrat x
+                if (isQuadratic && j < n) {
+                    matrix[i][n + j] = Math.pow(matrix[i][j], 2);
+                }
+            }
+        }
+        return matrix;
+    }
 
 }
 
