@@ -23,15 +23,19 @@ public class InterpolasiPolinomial {
             // Kolom terakhir diisi dengan nilai y
             matrixPolim.setElmt(i, n, matrix.getElmt(i, 1)); // Kolom 1 pada matrix adalah nilai y
         }
-    
-        //System.out.println("\nSEBELUM GAUSS\n");
-        //MatrixOutput.printMatrix(matrixPolim);
         
         // Melakukan eliminasi Gauss untuk mencari koefisien polinomial
         MatrixOperasi Result = MatrixOperasi.gaussElimination(matrixPolim);
-        //System.out.println("\nSESUDAH GAUSS\n");
-        //MatrixOutput.printMatrix(Result);
         return Result;
+    }
+
+    public static double InterPolimVal(double[] values, double t) {
+        double a0 = values[1];
+        double a1 = -0.5 * values[0] + 0.5 * values[2];
+        double a2 = values[0] - 2.5 * values[1] + 2 * values[2] - 0.5 * values[3];
+        double a3 = -0.5 * values[0] + 1.5 * values[1] - 1.5 * values[2] + 0.5 * values[3];
+
+        return ((a3 * t + a2) * t + a1) * t + a0;
     }
 
     public static void runInterpolasi (MatrixOperasi m, double x){
@@ -77,45 +81,4 @@ public class InterpolasiPolinomial {
         }
         System.out.printf("\nf(%.4f) = %.4f\n", x, result);
     }
-    
-    /* 
-    public static double InterPolimVal (MatrixOperasi matrix, double x){ //mencari nilai y dari suatu x  
-        MatrixOperasi matrixPolim = InterPolim(matrix);
-        double val = 0, pangkat = 0;
-        for (int i=0; i<matrixPolim.getRowEff(); i++){
-            val += matrixPolim.getElmt(i,matrixPolim.getLastIdxCol()) * Math.pow(x, pangkat);
-            pangkat++;
-        }
-        return val;
-    }
-    
-    public static String hasilInterPolim (MatrixOperasi matrix){ //membentuk string berisi hasil
-        MatrixOperasi matrixPolim = InterPolim(matrix);
-        //MatrixOutput.printMatrix(matrixPolim);
-        String nilai = "P(x) = ";
-        DecimalFormat df = new DecimalFormat("0.0000");
-        for (int i=0; i<matrix.getRowEff()-1; i++){
-            if (i == 0){
-                nilai += df.format(matrixPolim.getElmt(i, matrix.getColEff()-1));
-            }
-            else if (i == 1){
-                if (matrixPolim.getElmt(i, matrix.getColEff()-1) < 0){
-                    nilai += "-" + df.format(Math.abs(matrixPolim.getElmt(i, matrix.getColEff()-1))) + "x";
-                }
-                else {
-                    nilai += "+" + df.format(matrixPolim.getElmt(i, matrix.getColEff()-1))  + "x";
-                }
-            }
-            else{
-                if (matrixPolim.getElmt(i, matrix.getColEff()-1) < 0){
-                    nilai += "-" + df.format(Math.abs(matrixPolim.getElmt(i, matrix.getColEff()-1))) + "x^" + i;
-                }
-                else {
-                    nilai += "+" + df.format(matrixPolim.getElmt(i, matrix.getColEff()-1)) + "x^" + i;
-                }                
-            }
-        }
-        return nilai;
-    }
-    */
 }

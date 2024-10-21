@@ -6,10 +6,8 @@ import Function.*;
 // import java.util.InputMismatchException;
 
 public class Main {
-
     public static void clearConsole() {
         String os = System.getProperty("os.name").toLowerCase();
-        
         try {
             if (os.contains("windows")) {
                 // Jika OS adalah Windows, jalankan perintah yang sesuai
@@ -38,7 +36,8 @@ public class Main {
         System.out.println("4. Interpolasi Polinom");
         System.out.println("5. Interpolasi Bicubic Spline");
         System.out.println("6. Regresi Linier Berganda");
-        System.out.println("7. Keluar");
+        System.out.println("7. Interpolasi Gambar");
+        System.out.println("8. Keluar");
         System.out.print("Masukkan pilihan Anda: ");
         pilihan = input.nextInt();
         clearConsole();
@@ -148,7 +147,7 @@ public class Main {
                     }
                     break;
                 case 2:
-                    double det2=Determinan.determinanReduksi(m1);
+                    double det2= Determinan.determinanReduksi(m1);
                     if (Double.isNaN(det2)){
                         System.out.println("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan.");
                     }
@@ -292,7 +291,19 @@ public class Main {
                     Regresi.regresiLinearQuadraticFile(m);
                 }
             }
+        }
 
+        else if (pilihan == 7){
+            Scanner masuk = new Scanner(System.in); 
+            System.out.print("Masukkan nama file (.jpg atau .png): ");
+            String file = masuk.nextLine();
+            clearConsole();
+            ImageResize.resizing(file);
+            masuk.close();
+        }
+
+        else if (pilihan == 8){
+            System.out.println("Anda telah keluar!");
         }
 
         else {

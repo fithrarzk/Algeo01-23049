@@ -78,15 +78,6 @@ public class MatrixOperasi {
         return m;
     }
 
-    public void rowSwap(MatrixOperasi m, int rows1, int rows2){
-		double temp;
-		for (int i = 0; i < m.getColEff(); i++){
-			temp = m.getElmt(rows1, i);
-			m.setElmt(rows1, i, m.getElmt(rows2, i));
-			m.setElmt(rows2, i, temp);
-		}
-    }
-
     public static MatrixOperasi addRow (MatrixOperasi m, double[] newRow){
         MatrixOperasi mTemp;
         double[][] matrix;

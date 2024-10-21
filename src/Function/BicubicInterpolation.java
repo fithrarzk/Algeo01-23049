@@ -4,8 +4,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import ADT_Matrix.*;
+import Function.*;
 
 public class BicubicInterpolation {
+    public static double bicubicVal(double[][] values, double x, double y) {
+        double[] arr = new double[4];
+        for (int i = 0; i < 4; i++) {
+            arr[i] = InterpolasiPolinomial.InterPolimVal(values[i], y);
+        }
+        return InterpolasiPolinomial.InterPolimVal(arr, x);
+    }
     // Membuat Matriks dasar f(x,y)
     public static MatrixOperasi createMatrixF() {
         int row, col;

@@ -26,7 +26,7 @@ public class Regresi {
         }
 
         //Membuat matriks baru semacam SPL
-        mTemp = new MatrixOperasi(m.col, m.col + 1);
+        mTemp = new MatrixOperasi (m.col, m.col + 1);
 
         for(i = 0 ; i < mTemp.row ; i++){
             for(j = 0 ; j < mTemp.col ; j++){
@@ -82,7 +82,7 @@ public class Regresi {
             sum += result;
         }
 
-        System.out.printf("\nf(xk) = %.4f\n", sum);
+        System.out.printf("f(xk) = %.4f\n", sum);
     }
 
     public static void regresiLinearFile (MatrixOperasi m){
@@ -163,7 +163,7 @@ public class Regresi {
             }
             sum += result;
         }
-         System.out.printf("\nf(xk) = %.4f\n", sum);
+         System.out.printf("f(xk) = %.4f\n", sum);
     }
 
     public static void regresiLinearQuadraticKeyboard(MatrixOperasi m){
@@ -234,7 +234,7 @@ public class Regresi {
             }
             sum += result;
         }
-        System.out.printf("\nf(xk) = %.4f\n", sum);
+        System.out.printf("f(xk) = %.4f\n", sum);
     }
 
     public static void regresiLinearQuadraticFile(MatrixOperasi m) {
@@ -317,7 +317,7 @@ public class Regresi {
             }
             sum += result;
         }
-        System.out.printf("\nf(xk) = %.4f\n", sum);       
+        System.out.printf("f(xk) = %.4f\n", sum);       
     }
 }
 

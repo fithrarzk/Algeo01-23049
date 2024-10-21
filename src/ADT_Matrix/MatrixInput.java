@@ -142,46 +142,6 @@ public class MatrixInput {
             return matrix;
         }
     }
-    // public class ReadMatrix { //input file
-    //     public static double[][] readMatrixFile (String filePath) {
-    //         double [][] matrix = null;
-    //         try {
-    //             File file = new File (filePath);
-    //             Scanner scanner = new Scanner (file);
-    //             int baris = 0;
-    //             int kolom = 0;
-    //             while (scanner.hasNextLine()){
-    //                 String bar = scanner.nextLine();
-    //                 String [] kol = bar.trim().split("\\s+");
-    //                 kolom = kol.length;
-    //                 baris++;
-    //             }
-    //             matrix = new double[baris][kolom];
-    //             scanner.close();
-                
-    //             scanner = new Scanner (file);
-
-    //             //input elemen
-    //             int i = 0;
-    //             while (scanner.hasNextLine()){
-    //                 String bar = scanner.nextLine();
-    //                 String [] kol = bar.trim().split("\\s+");
-    //                 for (int j=0; j<baris;j++){
-    //                     matrix[i][j] = Double.parseDouble(kol[j]);
-    //                 } 
-    //                 i++;
-    //             } 
-    //             scanner.close();
-    //         }
-    //         catch (FileNotFoundException e){
-    //             System.out.println("File Tidak Ditemukan");
-    //             e.printStackTrace();
-    //         }
-    //         return matrix;
-    //     }
-    // }
-
-    // private static Scanner input = new Scanner(System.in).useLocale(Locale.US);
 
     public static double[][] readInterpolasiKeyboard(){
         int i, j;
