@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main {
+    // Untuk clearing terminal sesudah memasukkan input
     public static void clearConsole() {
         String os = System.getProperty("os.name").toLowerCase();
         try {
@@ -28,10 +29,12 @@ public class Main {
     
     public static void main(String[] args) throws InterruptedException {
         clearConsole();
+        Pemanis.sonnyangel();
         Scanner input = new Scanner(System.in);
         int pilihan, pil1, pil2, pil3 = 0, pilsave; 
-
-        System.out.println("=== Menu Utama ===");
+        System.out.println("------------------------------------------------------------");
+        System.out.println("                        Menu Utama                          ");
+        System.out.println("------------------------------------------------------------");
         System.out.println("1. Sistem Persamaan Linier");
         System.out.println("2. Determinan");
         System.out.println("3. Matriks Balikan");
@@ -47,7 +50,10 @@ public class Main {
         System.out.println();
 
         if (pilihan == 1) {
-            System.out.println("=== Menu Sistem Persamaan Linier ===");
+            Pemanis.spl();
+            System.out.println("------------------------------------------------------------");
+            System.out.println("               Menu Sistem Persamaan Linier                 ");
+            System.out.println("------------------------------------------------------------");
             System.out.println("1. Metode Eliminasi Gauss");
             System.out.println("2. Metode Eliminasi Gauss-Jordan");
             System.out.println("3. Metode Matriks Balikan");
@@ -60,6 +66,7 @@ public class Main {
 
             System.out.println("1. Masukan dari Keyboard");
             System.out.println("2. Masukan dari File");
+            System.out.println("3. Masukan Matrix Hilbert");
             System.out.print("Pilih metode input: ");
             pil2 = input.nextInt();
             input.nextLine();
@@ -89,6 +96,9 @@ public class Main {
                 m1 = new MatrixOperasi(m, m.length, m[0].length);
             } else if (pil2 == 2) {
                 m1 = MatrixInput.fileMatrix();
+            } else if (pil2 == 3){
+                double[][] hilbert = MatrixInput.hilbertMatrix();
+                m1 = new MatrixOperasi(hilbert, hilbert.length, hilbert[0].length);
             }
 
             String[] res;
@@ -129,8 +139,10 @@ public class Main {
         }
 
         else if (pilihan == 2) {
-
-            System.out.println("=== Menu Sistem Determinan ===");
+            Pemanis.deter();
+            System.out.println("------------------------------------------------------------");
+            System.out.println("                   Menu Sistem Determinan                   ");
+            System.out.println("------------------------------------------------------------");
             System.out.println("1. Metode Kofaktor");
             System.out.println("2. Metode OBE");
             System.out.print("Pilih metode: ");
@@ -138,8 +150,9 @@ public class Main {
             input.nextLine();
             clearConsole();
             System.out.println();
-
-            System.out.println("=== Menu Input ===");
+            System.out.println("------------------------------------------------------------");
+            System.out.println("                        Menu Input                          ");
+            System.out.println("------------------------------------------------------------");
             System.out.println("1. Masukan dari Keyboard");
             System.out.println("2. Masukan dari File");
             System.out.print("Pilih metode input: ");
@@ -165,7 +178,7 @@ public class Main {
                     for (String line : res) {
                         System.out.println(line);
                     }
-                    // Optionally save to a file
+                    // Pilihan save file / tidak
                     MatrixOutput.saveFile(res);
                     break;
                 case 2:
@@ -173,7 +186,7 @@ public class Main {
                     for (String line : res) {
                         System.out.println(line);
                     }
-                    // Optionally save to a file
+                    // Pilihan save file / tidak
                     MatrixOutput.saveFile(res);
                     break;
                 default:
@@ -185,8 +198,10 @@ public class Main {
 
 
         else if (pilihan == 3) {
-
-            System.out.println("=== Menu Sistem Invers ===");
+            Pemanis.inve();
+            System.out.println("------------------------------------------------------------");
+            System.out.println("                     Menu Sistem Invers                     ");
+            System.out.println("------------------------------------------------------------");
             System.out.println("1. Metode OBE");
             System.out.println("2. Metode Adjoin");
             System.out.print("Pilih metode: ");
@@ -194,8 +209,9 @@ public class Main {
             input.nextLine();
             clearConsole();
             System.out.println();
-
-            System.out.println("=== Menu Input ===");
+            System.out.println("------------------------------------------------------------");
+            System.out.println("                        Menu Input                          ");
+            System.out.println("------------------------------------------------------------");
             System.out.println("1. Masukan dari Keyboard");
             System.out.println("2. Masukan dari File");
             System.out.print("Pilih metode input: ");
@@ -220,7 +236,7 @@ public class Main {
                     for (String line : res) {
                         System.out.println(line);
                     }
-                    // Optionally save to a file
+                    // Pilihan save file / tidak
                     MatrixOutput.saveFile(res);
                     break;
                 case 2:
@@ -228,7 +244,7 @@ public class Main {
                     for (String line : res) {
                         System.out.println(line);
                     }
-                    // Optionally save to a file
+                    // Pilihan save file / tidak
                     MatrixOutput.saveFile(res);
                     break;
                 default:
@@ -239,7 +255,10 @@ public class Main {
         }
 
         else if (pilihan == 4){
-            System.out.println("=== Menu Input ===");
+            Pemanis.inter();
+            System.out.println("------------------------------------------------------------");
+            System.out.println("                         Menu Input                         ");
+            System.out.println("------------------------------------------------------------");
             System.out.println("1. Masukan dari Keyboard");
             System.out.println("2. Masukan dari File");
             System.out.print("Pilih metode input: ");
@@ -259,7 +278,7 @@ public class Main {
                 for (String line : res) {
                     System.out.println(line);
                 }
-                // Optionally save to a file
+                // Pilihan save file / tidak
                 MatrixOutput.saveFile(res);
             }
             else if (pil2 == 2){
@@ -269,25 +288,29 @@ public class Main {
                 for (String line : res) {
                     System.out.println(line);
                 }
-                // Optionally save to a file
+                // Pilihan save file / tidak
                 MatrixOutput.saveFile(res);
             }
 
         }
 
         else if (pilihan == 5){
+            Pemanis.bicub();
             String [] res;
             MatrixOperasi m = MatrixInput.fileMatrix();
             res = BicubicInterpolation.bicubicInterpolation(m);
             for (String line : res) {
                 System.out.println(line);
             }
-            // Optionally save to a file
+            // Pilihan save file / tidak
             MatrixOutput.saveFile(res);
         }
 
         else if (pilihan == 6) {
-            System.out.println("=== Menu Sistem Regresi ===");
+            Pemanis.regre();
+            System.out.println("------------------------------------------------------------");
+            System.out.println("                    Menu Sistem Regresi                     ");
+            System.out.println("------------------------------------------------------------");
             System.out.println("1. Regresi Linier");
             System.out.println("2. Regresi Kuadratik");
             System.out.print("Pilih metode: ");
@@ -295,7 +318,9 @@ public class Main {
             clearConsole();
             System.out.println();
             if (pil1 == 1) {
-                System.out.println("=== Menu Input ===");
+                System.out.println("------------------------------------------------------------");
+                System.out.println("                        Menu Input                          ");
+                System.out.println("------------------------------------------------------------");
                 System.out.println("1. Masukan dari Keyboard");
                 System.out.println("2. Masukan dari File");
                 System.out.print("Pilih metode input: ");
@@ -307,9 +332,9 @@ public class Main {
                     MatrixOperasi m1 = new MatrixOperasi(m, m.length, m[0].length);
                     res = Regresi.regresiLinearKeyboard(m1);
                     for (String line : res) {
-                        System.out.println(line);
+                        System.out.print(line + " ");
                     }
-                    // Optionally save to a file
+                    // Pilihan save file / tidak
                     MatrixOutput.saveFile(res);
 
                 }
@@ -317,14 +342,17 @@ public class Main {
                     MatrixOperasi m = MatrixInput.fileMatrix();
                     res = Regresi.regresiLinearFile(m);
                     for (String line : res) {
-                        System.out.println(line);
+                        System.out.print(line + " ");
                     }
-                    // Optionally save to a file
+                    System.out.println();
+                    // Pilihan save file / tidak
                     MatrixOutput.saveFile(res);
                 }
             }
             else if (pil1==2) {
-                System.out.println("=== Menu Input ===");
+                System.out.println("------------------------------------------------------------");
+                System.out.println("                        Menu Input                          ");
+                System.out.println("------------------------------------------------------------");
                 System.out.println("1. Masukan dari Keyboard");
                 System.out.println("2. Masukan dari File");
                 System.out.print("Pilih metode input: ");
@@ -336,24 +364,27 @@ public class Main {
                     MatrixOperasi m1 = new MatrixOperasi(m, m.length, m[0].length);
                     res = Regresi.regresiLinearQuadraticKeyboard(m1);
                     for (String line : res) {
-                    System.out.println(line);
+                        System.out.print(line + " ");
                     }
-                    // Optionally save to a file
+                    System.out.println();
+                    // Pilihan save file / tidak
                     MatrixOutput.saveFile(res);
                 }
                 else if (pil2 == 2) {
                     MatrixOperasi m = MatrixInput.fileMatrix();
                     res = Regresi.regresiLinearQuadraticFile(m);
                     for (String line : res) {
-                        System.out.println(line);
+                        System.out.print(line + " ");
                     }
-                    // Optionally save to a file
+                    System.out.println();
+                    // Pilihan save file / tidak
                     MatrixOutput.saveFile(res);
                 }
             }
         }
 
         else if (pilihan == 7){
+            Pemanis.gambar();
             Scanner masuk = new Scanner(System.in); 
             System.out.print("Masukkan nama file (.jpg atau .png): ");
             String file = masuk.nextLine();
@@ -363,13 +394,12 @@ public class Main {
         }
 
         else if (pilihan == 8){
-            System.out.println("Anda telah keluar!");
+            Pemanis.tengkyu();
         }
 
         else {
-            System.out.println("Fitur lain belum tersedia.");
+            Pemanis.nofitur();
         }
         input.close();
     }
 }
-

@@ -92,7 +92,4 @@ public class MatrixOutput {
         // Convert the list to a String array and return
         return result.toArray(new String[0]);
     }
-    
-
-
 }

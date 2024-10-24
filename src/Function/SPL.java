@@ -7,10 +7,10 @@ import java.util.List;
 
 public class SPL {
     public static String[] gaussSPL(MatrixOperasi matrix) {
-        // Use a List to accumulate the output
+        // untuk output
         List<String> resultToFile = new ArrayList<>();
 
-        // Perform Gauss elimination
+        // Gauss elimination
         matrix = MatrixOperasi.gaussElimination(matrix);
         double[] x = new double[matrix.getRowEff()];
 
@@ -70,7 +70,7 @@ public class SPL {
         else {
             // If the solution is parametric, call the parametrik method and add the result
             resultToFile.add("Solusi banyak (parametrik):");
-            resultToFile.add(MatrixOperasi.parametrik(Mgaussjordan));  // Assuming this method returns a String
+            resultToFile.add(MatrixOperasi.parametrik(Mgaussjordan)); 
         }
 
         // Convert List to String array and return
@@ -98,10 +98,10 @@ public static String[] cramerSPL(MatrixOperasi m) {
             }
         }
 
-        // Calculate determinant of matMain
+        // mencari determinan matMain
         double det = Determinan.determinanKofaktor(matMain);
 
-        // Prepare the output
+        // output
         List<String> resultToFile = new ArrayList<>();
 
         // If determinant is zero or the number of equations does not match the number of variables
@@ -136,18 +136,18 @@ public static String[] cramerSPL(MatrixOperasi m) {
 
     public static String[] inversSPL(MatrixOperasi m) {
     MatrixOperasi matMain, matRes;
-    List<String> resultToFile = new ArrayList<>();  // Use a list to accumulate output
+    List<String> resultToFile = new ArrayList<>();  
 
     matMain = new MatrixOperasi(m.getRowEff(), m.getColEff() - 1);
     matRes = new MatrixOperasi(m.getRowEff(), 1);
 
-    // Check if the coefficient matrix is square
+    // cek matriks persegi
     if (!MatrixOperasi.isSquare(matMain)) {
         resultToFile.add("Persamaan tidak dapat diselesaikan dengan metode invers SPL karena matrix koefisien bukan matrix persegi sehingga invers tidak dapat ditentukan.");
         return resultToFile.toArray(new String[0]);
     }
 
-    // Fill in the coefficient matrix and result matrix
+    // Mengisi coefficient  matrix and result matrix
     for (int i = 0; i < m.getRowEff(); i++) {
         for (int j = 0; j < m.getColEff(); j++) {
             if (j != m.getColEff() - 1) {
@@ -158,7 +158,7 @@ public static String[] cramerSPL(MatrixOperasi m) {
         }
     }
 
-    // Calculate the inverse of the coefficient matrix
+    // menghitung invers
     MatrixOperasi matMainInvers = Invers.inversAdjoin(matMain);
 
     // If the inverse doesn't exist, return an error message

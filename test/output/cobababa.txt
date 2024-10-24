@@ -1,4 +1,0 @@
-Hasil Matrix Setelah Gauss Elimination:
-1.000 
-
-Solusi tidak ada.

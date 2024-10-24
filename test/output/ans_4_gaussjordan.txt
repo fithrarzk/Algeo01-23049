@@ -1,0 +1,10 @@
+Hasil Matrix Setelah Gauss Jordan Elimination:
+1,000 0,000 0,000 14,444 
+0,000 1,000 0,000 7,222 
+0,000 0,000 1,000 10,000 
+
+
+Solusi tunggal:
+X[1] = 14,4444
+X[2] = 7,2222
+X[3] = 10,0000

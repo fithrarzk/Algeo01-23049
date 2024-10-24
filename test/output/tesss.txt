@@ -1,8 +1,0 @@
-Hasil Matrix Setelah Gauss Elimination:
-1.000 1.000 2.000 
-0.000 1.000 -1.000 
-
-
-Solusi tunggal:
-X[1] = 3.0000
-X[2] = -1.0000

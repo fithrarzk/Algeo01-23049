@@ -7,7 +7,7 @@ public class MatrixInput {
 
     public static Scanner input = new Scanner(System.in).useLocale(Locale.US);
 
-    public static double[][] normalMatrix() { //Input Biasa
+    public static double[][] normalMatrix() { // Input Matriks Biasa
             Scanner scanner = new Scanner(System.in);
         try{
             System.out.print ("Masukan jumlah baris : ");
@@ -29,7 +29,7 @@ public class MatrixInput {
         } 
     }
     
-
+    // Memasukkan matriks augmented dimana terdiri dari matriks dan matriks hasil
     public static double[][] augmentedMatrix(){
         Scanner scanner = new Scanner(System.in);
         int i,j;
@@ -67,8 +67,6 @@ public class MatrixInput {
         }
         return matrix;
     }
-
-
 
     public static MatrixOperasi fileMatrix(){
         int i;
@@ -158,8 +156,8 @@ public class MatrixInput {
             }
         }
         MatrixOperasi m = new MatrixOperasi(matrix, n+1, 2);
-        //System.out.println("\nini hasilnya\n");
-        //MatrixOutput.printMatrix(m);
+        // System.out.println("\nini hasilnya\n");
+        // MatrixOutput.printMatrix(m);
         
         return matrix;
     }
@@ -197,8 +195,28 @@ public class MatrixInput {
         return matrix;
     }
 
+    public static double [][] hilbertMatrix() { // Input Hilbert
+        Scanner scanner = new Scanner(System.in);
+        try {
+            System.out.print("Masukan jumlah ordo : ");
+            int ordo = scanner.nextInt();
+            double [][] matrixHilbert = new double [ordo][ordo+1];
 
+            // Mengisi matriks Hilbert, kecuali kolom terakhir
+            for (int i = 0; i < ordo; i++) {
+                for (int j = 0; j < ordo; j++) {
+                    matrixHilbert[i][j] = 1.0 / (i + j + 1);
+                }
+                // Kolom terakhir: [1, 0, 0, 0...]
+                matrixHilbert[i][ordo] = (i == 0) ? 1 : 0;
+            }
+            //MatrixOperasi m = new MatrixOperasi(matrixHilbert, matrixHilbert.length, matrixHilbert[0].length);
+            //MatrixOutput.printMatrix(m);
+            return matrixHilbert;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }
-
-

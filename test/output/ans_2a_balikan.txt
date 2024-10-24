@@ -1,0 +1,1 @@
+SPL tidak dapat diselesaikan dengan matriks balikan karena nilai balikan matriks tidak terdefinisi.

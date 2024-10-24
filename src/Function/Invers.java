@@ -31,42 +31,6 @@ public class Invers {
         }
 	}
 
-    /*  
-    public static void inversOBE(MatrixOperasi m) {
-        int n = m.getRowEff(); // Assuming it's a square matrix
-        MatrixOperasi identity = MatrixOperasi.createIdentity(n);
-
-        // Perform the Gauss-Jordan elimination to get the inverse
-        for (int i = 0; i < n; i++) {
-            double pivot = m.getElmt(i, i); // Ambil elemen diagonal utama
-    
-            // Jika pivot 0, ini berarti matriks singular, tidak bisa dibalik
-            if (pivot == 0) {
-                System.out.println("Matrix singular, tidak memiliki invers.");
-                return; // Handle zero pivot (not invertible)
-            }
-            
-            // Eliminasi elemen di atas dan di bawah pivot (kolom ke-i)
-            for (int j = 0; j < n; j++) {
-                m.setElmt(i, j, m.getElmt(i, j) / pivot); 
-                identity.setElmt(i, j, identity.getElmt(i, j) / pivot); 
-            }
-
-            // Eliminasi elemen di atas dan di bawah pivot (kolom ke-i)
-            for (int k = 0; k < n; k++) {
-                if (k != i) {
-                    double factor = m.getElmt(k, i);
-                    for (int j = 0; j < n; j++) {
-                        m.setElmt(k, j, m.getElmt(k, j) - factor * m.getElmt(i, j)); 
-                        identity.setElmt(k, j, identity.getElmt(k, j) - factor * identity.getElmt(i, j)); 
-                    }
-                }
-            }
-        }
-        MatrixOutput.printMatrix(identity);
-    }
-    */
-
     public static MatrixOperasi inversIdentitas (MatrixOperasi m){
         int i, j, k;
         MatrixOperasi invers;
@@ -158,4 +122,3 @@ public class Invers {
 		return resultToFile.toArray(new String[0]);
     }
 }
-
