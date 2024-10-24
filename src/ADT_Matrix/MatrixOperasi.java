@@ -1,6 +1,12 @@
 package ADT_Matrix;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
 import Function.Determinan;
+import Function.Invers;
 
 public class MatrixOperasi {
     public int row;
@@ -278,43 +284,43 @@ public class MatrixOperasi {
         return true;
     }
 
-    public static String[] parametrik(MatrixOperasi m) {
+    public static String parametrik(MatrixOperasi m) {
+        StringBuilder result = new StringBuilder();
         String[] solusi = new String[m.getColEff() - 1];
         String[] par = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
         int i, j, a, b;
         int x = 0;
     
         for (j = 0; j < m.getColEff() - 1; j++) {
-            StringBuilder result = new StringBuilder();
+            StringBuilder tempResult = new StringBuilder();
             if (KolomNol(m, j)) {
                 solusi[x] = par[x];
                 x++;
             } else {
-                // cek apakah elemen itu leading one
                 for (i = m.getRowEff() - 1; i >= 0; i--) {
-                    if (m.getElmt(i,j) != 0) {
+                    if (m.getElmt(i, j) != 0) {
                         for (b = 0; b < m.getColEff() - 1; b++) {
-                            if (m.getElmt(i,b) != 0) {
+                            if (m.getElmt(i, b) != 0) {
                                 break;
                             }
-                        } // b adalah indeks leading one
-                        if (j != b) { // kalau dia bukan leading one
+                        }
+                        if (j != b) {
                             solusi[x] = par[x];
                             x++;
-                        } else { // kalau dia leading one
-                            if (m.getElmt(i,m.getColEff()-1) != 0) {
-                                result.append(String.format("%.3f", m.getElmt(i,m.getColEff()-1)));
+                        } else {
+                            if (m.getElmt(i, m.getColEff() - 1) != 0) {
+                                tempResult.append(String.format("%.3f", m.getElmt(i, m.getColEff() - 1)));
                             }
                             for (a = b + 1; a < m.getColEff() - 1; a++) {
-                                if (m.getElmt(i,a) > 0) {
-                                    result.append(" - ").append(String.format("%.3f", m.getElmt(i,a))).append("x").append(a + 1);
-                                } else if (m.getElmt(i,a) < 0 && m.getElmt(i,m.getColEff()-1) != 0) {
-                                    result.append(" + ").append(String.format("%.3f", (-1 * m.getElmt(i,a)))).append("x").append(a + 1);
-                                } else if (m.getElmt(i,a) < 0 && m.getElmt(i,m.getColEff()-1) == 0) {
-                                    result.append("").append(String.format("%.3f", (-1 * m.getElmt(i,a)))).append("x").append(a + 1);
+                                if (m.getElmt(i, a) > 0) {
+                                    tempResult.append(" - ").append(String.format("%.3f", m.getElmt(i, a))).append("x").append(a + 1);
+                                } else if (m.getElmt(i, a) < 0 && m.getElmt(i, m.getColEff() - 1) != 0) {
+                                    tempResult.append(" + ").append(String.format("%.3f", (-1 * m.getElmt(i, a)))).append("x").append(a + 1);
+                                } else if (m.getElmt(i, a) < 0 && m.getElmt(i, m.getColEff() - 1) == 0) {
+                                    tempResult.append("").append(String.format("%.3f", (-1 * m.getElmt(i, a)))).append("x").append(a + 1);
                                 }
                             }
-                            solusi[x] = result.toString();
+                            solusi[x] = tempResult.toString();
                             x++;
                         }
                         break;
@@ -322,23 +328,26 @@ public class MatrixOperasi {
                 }
             }
         }
-        for (int y = 0; y < (m.getColEff()) - 1; y++) {
-            System.out.printf("x%d = ", y+1);
-            System.out.println(solusi[y]);
+    
+        // Format the result
+        for (int y = 0; y < m.getColEff() - 1; y++) {
+            result.append(String.format("x%d = ", y + 1));
+            result.append(solusi[y]).append("\n");
         }
-        
+    
+        // Replace variables in the solution where needed
         for (int w = 0; w < x; w++) {
-            // Cek apakah solusi mengandung variabel lain
             String currentSolution = solusi[w];
             for (int e = 0; e < x; e++) {
-                // Ganti variabel lain yang merupakan parameter
                 if (currentSolution.contains("x" + (e + 1)) && w != e) {
-                    currentSolution = currentSolution.replace("x" + (e + 1), par[e]); // Mengganti x dengan parameter
+                    currentSolution = currentSolution.replace("x" + (e + 1), par[e]);
                 }
             }
-            solusi[w] = currentSolution; // Update solusi dengan substitusi
+            solusi[w] = currentSolution;
+            result.append(String.format("x%d = %s\n", w + 1, currentSolution));
         }
-        return solusi;
+    
+        return result.toString();
     }
 
     public static void backSubstitution(MatrixOperasi matrix, double[] X) {
@@ -596,5 +605,4 @@ public class MatrixOperasi {
         }
         return MMultiply;
     }
-
 }

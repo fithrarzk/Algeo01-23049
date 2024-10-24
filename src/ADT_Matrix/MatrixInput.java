@@ -21,15 +21,12 @@ public class MatrixInput {
                     matrix[i][j] = scanner.nextDouble();
                 }
             }
-            return matrix;
+              return matrix;
         }
         catch (Exception e){
             e.printStackTrace();
             return null;            
         } 
-        finally{
-            scanner.close();
-        }
     }
     
 
@@ -199,6 +196,8 @@ public class MatrixInput {
         }
         return matrix;
     }
+
+
 
 }
 

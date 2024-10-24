@@ -1,7 +1,12 @@
 package Function;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import ADT_Matrix.MatrixOperasi;
 //import ADT_Matrix.MatrixOutput;
+import ADT_Matrix.MatrixOutput;
 
 public class Invers {
 
@@ -120,5 +125,37 @@ public class Invers {
 		}
 		return m;
 	}
+
+	
+	public static String[] handleInversCases(MatrixOperasi m1, int pil1) {
+        List<String> resultToFile = new ArrayList<>();
+    
+        switch (pil1) {
+            case 1:
+                MatrixOperasi hasil = Invers.inversIdentitas(m1);
+                if (Determinan.determinanReduksi(m1) != 0) { 
+                    resultToFile.add("Matrix Invers (Metode Identitas):");
+                    resultToFile.addAll(Arrays.asList(MatrixOutput.matrixToStringArray(hasil)));
+                } else {
+                    resultToFile.add("Invers tidak ada.");
+                }
+                break;
+
+            case 2:
+                MatrixOperasi inv = Invers.inversAdjoin(m1);
+                if (inv == null) {
+                    resultToFile.add("Matrix singular, tidak bisa dihitung inversenya.");
+                } else {
+                    resultToFile.add("Matrix Invers (Metode Adjoin):");
+                    resultToFile.addAll(Arrays.asList(MatrixOutput.matrixToStringArray(inv)));
+                }
+                break;
+
+            default:
+                resultToFile.add("Pilihan tidak valid.");
+                break;
+        }
+		return resultToFile.toArray(new String[0]);
+    }
 }
 

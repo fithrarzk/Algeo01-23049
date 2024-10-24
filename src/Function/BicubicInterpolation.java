@@ -5,14 +5,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import ADT_Matrix.*;
 import Function.*;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BicubicInterpolation {
     public static double bicubicVal(double[][] values, double x, double y) {
         double[] arr = new double[4];
         for (int i = 0; i < 4; i++) {
-            arr[i] = InterpolasiPolinomial.InterPolimVal(values[i], y);
+            arr[i] = InterpolasiPolinomial.interPolimVal(values[i], y);
         }
-        return InterpolasiPolinomial.InterPolimVal(arr, x);
+        return InterpolasiPolinomial.interPolimVal(arr, x);
     }
     // Membuat Matriks dasar f(x,y)
     public static MatrixOperasi createMatrixF() {
@@ -169,12 +172,12 @@ public class BicubicInterpolation {
     }
 
     // Metode untuk melakukan interpolasi bicubic
-    public static void bicubicInterpolation(MatrixOperasi inputMatrix) {
-        BufferedReader inputFile = new BufferedReader(new InputStreamReader(System.in));
+    public static String[] bicubicInterpolation(MatrixOperasi inputMatrix) {
+        List<String> resultToFile = new ArrayList<>();  // List untuk menyimpan hasil sebagai string
         int i, j;
         MatrixOperasi m1;
         MatrixOperasi m2;
-
+    
         // Menginput matriks 4x4 dari inputMatrix
         m1 = new MatrixOperasi(4, 4);
         for (i = 0; i < 4; i++) {
@@ -182,13 +185,13 @@ public class BicubicInterpolation {
                 m1.setElmt(i, j, inputMatrix.matrix[i][j]);
             }
         }
-
+    
         // Menginput nilai a dan b
         m2 = new MatrixOperasi(1, 2);
         for (j = 0; j < 2; j++) {
             m2.setElmt(0, j, inputMatrix.matrix[4][j]);
         }
-
+    
         // Mengubah bentuk matriks 4x4 menjadi 16x1
         MatrixOperasi tempY = new MatrixOperasi(16, 1);
         int index = 0;
@@ -198,12 +201,17 @@ public class BicubicInterpolation {
                 index++;
             }
         }
-
+    
         // Menghitung A = (invers X) * Y
         MatrixOperasi X = createMatrixX();
-        MatrixOperasi inversX = Invers.inversIdentitas(X); // Menghitung invers dari matriks X
-        MatrixOperasi A = MatrixOperasi.multiplyMatrix(inversX, tempY); // Perkalian matriks
-
+        MatrixOperasi inversX = Invers.inversIdentitas(X);  // Menghitung invers dari matriks X
+        if (inversX == null) {
+            resultToFile.add("Invers dari matriks X tidak terdefinisi.");
+            return resultToFile.toArray(new String[0]);  // Mengembalikan hasil dalam bentuk array string
+        }
+    
+        MatrixOperasi A = MatrixOperasi.multiplyMatrix(inversX, tempY);  // Perkalian matriks
+    
         // Menjumlahkan hasil perkalian A dengan a pangkat i dan b pangkat j
         Double result = 0.0;
         index = 0;
@@ -213,7 +221,13 @@ public class BicubicInterpolation {
                 index++;
             }
         }
-        // Output hasil interpolasi
-        System.out.println("f(" + m2.matrix[0][0] + "," + m2.matrix[0][1] + ") = " + String.format("%.4f", result));
+    
+        // Format hasil interpolasi
+        String resultString = String.format("f(%.4f, %.4f) = %.4f", m2.matrix[0][0], m2.matrix[0][1], result);
+        resultToFile.add(resultString);
+    
+        // Mengembalikan hasil dalam bentuk array string
+        return resultToFile.toArray(new String[0]);
     }
+    
 }

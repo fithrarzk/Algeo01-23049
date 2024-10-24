@@ -1,6 +1,9 @@
 package Function;
 import java.text.DecimalFormat;
 import ADT_Matrix.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class InterpolasiPolinomial {
     public static MatrixOperasi InterPolim (MatrixOperasi matrix, Boolean m){ //Membentuk solusi masing-masing dari a0 - aN
@@ -29,7 +32,7 @@ public class InterpolasiPolinomial {
         return Result;
     }
 
-    public static double InterPolimVal(double[] values, double t) {
+    public static double interPolimVal(double[] values, double t) {
         double a0 = values[1];
         double a1 = -0.5 * values[0] + 0.5 * values[2];
         double a2 = values[0] - 2.5 * values[1] + 2 * values[2] - 0.5 * values[3];
@@ -38,47 +41,61 @@ public class InterpolasiPolinomial {
         return ((a3 * t + a2) * t + a1) * t + a0;
     }
 
-    public static void runInterpolasi (MatrixOperasi m, double x){
+    public static String[] runInterpolasi(MatrixOperasi m, double x) {
+        List<String> resultToFile = new ArrayList<>();
         double result = 0;
+    
         // Eliminasi Gauss
         MatrixOperasi mTemp = MatrixOperasi.gaussElimination(m);
-        double[] m1 = new double [mTemp.getRowEff()];
+        double[] m1 = new double[mTemp.getRowEff()];
         MatrixOperasi.backSubstitution(mTemp, m1);
-
-        System.out.print("f(x) = ");
+    
+        // Menyusun persamaan interpolasi
+        String equation = "f(x) = ";
         for (int i = m.getRowEff() - 1; i >= 0; i--) {
             double temp = (m1[i] * Math.pow(x, i));
             result += temp;
-            if (i == m.row - 1){
-                if (m1[i] > 0){
-                    System.out.printf("%.4fx^%d ", m1[i], i);
+            
+            if (i == m.getRowEff() - 1) {
+                if (m1[i] > 0) {
+                    equation += String.format("%.4fx^%d ", m1[i], i);
                 } else {
                     m1[i] *= -1;
-                    System.out.printf("- %.4fx^%d ", m1[i], i);
+                    equation += String.format("- %.4fx^%d ", m1[i], i);
                 }
-            }else if (i > 1 && i < m.row - 1){
-                if (m1[i] > 0){
-                    System.out.printf("+ %.4fx^%d ", m1[i], i);
+            } else if (i > 1 && i < m.getRowEff() - 1) {
+                if (m1[i] > 0) {
+                    equation += String.format("+ %.4fx^%d ", m1[i], i);
                 } else {
                     m1[i] *= -1;
-                    System.out.printf("- %.4fx^%d ", m1[i], i);
+                    equation += String.format("- %.4fx^%d ", m1[i], i);
                 }
-            } else if ( i == 1){
-                if (m1[i] > 0){
-                    System.out.printf("+ %.4fx ", m1[i]);
+            } else if (i == 1) {
+                if (m1[i] > 0) {
+                    equation += String.format("+ %.4fx ", m1[i]);
                 } else {
                     m1[i] *= -1;
-                    System.out.printf("- %.4fx ", m1[i]);
+                    equation += String.format("- %.4fx ", m1[i]);
                 }
-            } else{
-                if (m1[i] > 0){
-                    System.out.printf("+ %.4f, ", m1[i]);
+            } else {
+                if (m1[i] > 0) {
+                    equation += String.format("+ %.4f", m1[i]);
                 } else {
                     m1[i] *= -1;
-                    System.out.printf("- %.4f, ", m1[i]);
+                    equation += String.format("- %.4f", m1[i]);
                 }
             }
         }
-        System.out.printf("\nf(%.4f) = %.4f\n", x, result);
+    
+        // Tambahkan persamaan interpolasi ke dalam list
+        resultToFile.add(equation);
+    
+        // Hasil interpolasi pada titik x
+        String resultString = String.format("f(%.4f) = %.4f", x, result);
+        resultToFile.add(resultString);
+    
+        // Konversi list ke array string dan return
+        return resultToFile.toArray(new String[0]);
     }
+    
 }

@@ -1,9 +1,11 @@
 package ADT_Matrix;
 
-import java.util.Scanner;
-import java.util.Locale;
+import java.util.*;
+
 import Function.*;
-// import java.util.InputMismatchException;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
     public static void clearConsole() {
@@ -23,11 +25,11 @@ public class Main {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
+    
+    public static void main(String[] args) throws InterruptedException {
         clearConsole();
         Scanner input = new Scanner(System.in);
-        int pilihan, pil1, pil2, pil3 = 0; 
+        int pilihan, pil1, pil2, pil3 = 0, pilsave; 
 
         System.out.println("=== Menu Utama ===");
         System.out.println("1. Sistem Persamaan Linier");
@@ -40,6 +42,7 @@ public class Main {
         System.out.println("8. Keluar");
         System.out.print("Masukkan pilihan Anda: ");
         pilihan = input.nextInt();
+        input.nextLine();
         clearConsole();
         System.out.println();
 
@@ -51,6 +54,7 @@ public class Main {
             System.out.println("4. Kaidah Cramer");
             System.out.print("Pilih metode: ");
             pil1 = input.nextInt();
+            input.nextLine();
             clearConsole();
             System.out.println();
 
@@ -58,6 +62,7 @@ public class Main {
             System.out.println("2. Masukan dari File");
             System.out.print("Pilih metode input: ");
             pil2 = input.nextInt();
+            input.nextLine();
             clearConsole();
             System.out.println();
             MatrixOperasi m1 = null;
@@ -67,6 +72,7 @@ public class Main {
                 System.out.println("2. Masukan Matrix Augmented");
                 System.out.print("Pilih jenis input: ");
                 pil3 = input.nextInt();
+                input.nextLine();
                 clearConsole();
                 System.out.println();
                 
@@ -80,33 +86,47 @@ public class Main {
                     input.close();
                     return;
                 }
-
                 m1 = new MatrixOperasi(m, m.length, m[0].length);
             } else if (pil2 == 2) {
                 m1 = MatrixInput.fileMatrix();
             }
 
+            String[] res;
             switch (pil1) {
                 case 1:
-                    SPL.gaussSPL(m1);
-                    break;
+                res = SPL.gaussSPL(m1);
+                for (String line : res) {
+                    System.out.println(line);
+                }
+                MatrixOutput.saveFile(res);
+                break;
                 case 2:
-                    SPL.gaussJordanSPL(m1);
-                    break;
+                res = SPL.gaussJordanSPL(m1);
+                for (String line : res) {
+                    System.out.println(line);
+                }
+                MatrixOutput.saveFile(res);
+                break;
                 case 3:
-                    SPL.inversSPL(m1);
-                    break;
+                res = SPL.inversSPL(m1);
+                for (String line : res) {
+                    System.out.println(line);
+                }
+                MatrixOutput.saveFile(res);
+                break;
                 case 4:
-                    SPL.cramerSPL(m1);
-                    break;
+                res = SPL.cramerSPL(m1);
+                for (String line : res) {
+                    System.out.println(line);
+                }
+                MatrixOutput.saveFile(res);
+                break;
                 default:
-                    System.out.println("Pilihan tidak valid.");
-                    input.close();
-                    return;
+                System.out.println("Pilihan tidak valid.");
+                input.close();
+                return;
             }
-
-        } 
-        
+        }
 
         else if (pilihan == 2) {
 
@@ -115,6 +135,7 @@ public class Main {
             System.out.println("2. Metode OBE");
             System.out.print("Pilih metode: ");
             pil1 = input.nextInt();
+            input.nextLine();
             clearConsole();
             System.out.println();
 
@@ -123,6 +144,7 @@ public class Main {
             System.out.println("2. Masukan dari File");
             System.out.print("Pilih metode input: ");
             pil2 = input.nextInt();
+            input.nextLine();
             clearConsole();
             System.out.println();
             MatrixOperasi m1 = null;
@@ -136,24 +158,23 @@ public class Main {
                 m1 = MatrixInput.fileMatrix();
             }
 
+            String[] res;
             switch (pil1) {
                 case 1:
-                    double det1=Determinan.determinanKofaktor(m1);
-                    if (Double.isNaN(det1)){
-                        System.out.println("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan.");
+                    res = Determinan.handleDeterminantCases(m1, 1);
+                    for (String line : res) {
+                        System.out.println(line);
                     }
-                    else{
-                        System.out.println("Hasil Determinan: " + Determinan.determinanKofaktor(m1));
-                    }
+                    // Optionally save to a file
+                    MatrixOutput.saveFile(res);
                     break;
                 case 2:
-                    double det2= Determinan.determinanReduksi(m1);
-                    if (Double.isNaN(det2)){
-                        System.out.println("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan.");
+                    res = Determinan.handleDeterminantCases(m1, 2);
+                    for (String line : res) {
+                        System.out.println(line);
                     }
-                    else{
-                        System.out.println("Hasil Determinan: " + Determinan.determinanReduksi(m1));
-                    }
+                    // Optionally save to a file
+                    MatrixOutput.saveFile(res);
                     break;
                 default:
                     System.out.println("Pilihan tidak valid.");
@@ -170,6 +191,7 @@ public class Main {
             System.out.println("2. Metode Adjoin");
             System.out.print("Pilih metode: ");
             pil1 = input.nextInt();
+            input.nextLine();
             clearConsole();
             System.out.println();
 
@@ -178,6 +200,7 @@ public class Main {
             System.out.println("2. Masukan dari File");
             System.out.print("Pilih metode input: ");
             pil2 = input.nextInt();
+            input.nextLine();
             clearConsole();
             System.out.println();
             MatrixOperasi m1 = null;
@@ -185,29 +208,28 @@ public class Main {
             if (pil2 == 1) {
                 double[][] m = null;
                 m = MatrixInput.normalMatrix();
-
                 m1 = new MatrixOperasi(m, m.length, m[0].length);
             } else if (pil2 == 2) {
                 m1 = MatrixInput.fileMatrix();
             }
 
+            String res[]; 
             switch (pil1) {
                 case 1:
-                    MatrixOperasi hasil = Invers.inversIdentitas(m1);
-                    if (Determinan.determinanReduksi(m1) != 0){ 
-                        MatrixOutput.printMatrix(hasil);
+                    res = Invers.handleInversCases(m1, 1);
+                    for (String line : res) {
+                        System.out.println(line);
                     }
-                    else{
-                    System.out.println("Invers tidak ada.");
-                    }
+                    // Optionally save to a file
+                    MatrixOutput.saveFile(res);
+                    break;
                 case 2:
-                    MatrixOperasi inv = Invers.inversAdjoin(m1);
-                    if (inv==null){
-                        System.out.println("Matrix singular, tidak bisa dihitung inversenya.");
+                    res = Invers.handleInversCases(m1, 1);
+                    for (String line : res) {
+                        System.out.println(line);
                     }
-                    else {
-                        MatrixOutput.printMatrix(inv);
-                    }
+                    // Optionally save to a file
+                    MatrixOutput.saveFile(res);
                     break;
                 default:
                     System.out.println("Pilihan tidak valid.");
@@ -225,6 +247,7 @@ public class Main {
             while (pil2 < 1 || pil2 > 2){
                 pil2 = input.nextInt();
             }
+            String res[];
             if (pil2 == 1){
                 double[][]m = MatrixInput.readInterpolasiKeyboard();
                 MatrixOperasi m1 = new MatrixOperasi(m, m.length, m[0].length+1);
@@ -232,21 +255,35 @@ public class Main {
                 input.useLocale(Locale.US);
                 double xToEstimate = input.nextDouble();
                 MatrixOperasi inter = InterpolasiPolinomial.InterPolim(m1, false);
-                InterpolasiPolinomial.runInterpolasi(inter, xToEstimate);
-
+                res = InterpolasiPolinomial.runInterpolasi(inter, xToEstimate);
+                for (String line : res) {
+                    System.out.println(line);
+                }
+                // Optionally save to a file
+                MatrixOutput.saveFile(res);
             }
             else if (pil2 == 2){
                 MatrixOperasi m = MatrixInput.fileMatrix();
                 MatrixOperasi inter = InterpolasiPolinomial.InterPolim(m, true);
-                InterpolasiPolinomial.runInterpolasi(inter, m.getElmt(m.getRowEff()-1, 0));
+                res = InterpolasiPolinomial.runInterpolasi(inter, m.getElmt(m.getRowEff()-1, 0));
+                for (String line : res) {
+                    System.out.println(line);
+                }
+                // Optionally save to a file
+                MatrixOutput.saveFile(res);
             }
 
         }
 
         else if (pilihan == 5){
+            String [] res;
             MatrixOperasi m = MatrixInput.fileMatrix();
-            MatrixOutput.printMatrix(m);
-            BicubicInterpolation.bicubicInterpolation(m);
+            res = BicubicInterpolation.bicubicInterpolation(m);
+            for (String line : res) {
+                System.out.println(line);
+            }
+            // Optionally save to a file
+            MatrixOutput.saveFile(res);
         }
 
         else if (pilihan == 6) {
@@ -264,14 +301,26 @@ public class Main {
                 System.out.print("Pilih metode input: ");
                 pil2 = input.nextInt();
                 boolean isquad = false;
+                String res[];
                 if (pil2 == 1) {
                     double[][]m = MatrixInput.regresiMatrix(isquad);
                     MatrixOperasi m1 = new MatrixOperasi(m, m.length, m[0].length);
-                    Regresi.regresiLinearKeyboard(m1);
+                    res = Regresi.regresiLinearKeyboard(m1);
+                    for (String line : res) {
+                        System.out.println(line);
+                    }
+                    // Optionally save to a file
+                    MatrixOutput.saveFile(res);
+
                 }
                 else if (pil2 == 2) {
                     MatrixOperasi m = MatrixInput.fileMatrix();
-                    Regresi.regresiLinearFile(m);
+                    res = Regresi.regresiLinearFile(m);
+                    for (String line : res) {
+                        System.out.println(line);
+                    }
+                    // Optionally save to a file
+                    MatrixOutput.saveFile(res);
                 }
             }
             else if (pil1==2) {
@@ -281,14 +330,25 @@ public class Main {
                 System.out.print("Pilih metode input: ");
                 pil2 = input.nextInt();
                 boolean isquad = true;
+                String res[];
                 if (pil2 == 1) {
                     double[][]m = MatrixInput.regresiMatrix(isquad);
                     MatrixOperasi m1 = new MatrixOperasi(m, m.length, m[0].length);
-                    Regresi.regresiLinearQuadraticKeyboard(m1);
+                    res = Regresi.regresiLinearQuadraticKeyboard(m1);
+                    for (String line : res) {
+                    System.out.println(line);
+                    }
+                    // Optionally save to a file
+                    MatrixOutput.saveFile(res);
                 }
                 else if (pil2 == 2) {
                     MatrixOperasi m = MatrixInput.fileMatrix();
-                    Regresi.regresiLinearQuadraticFile(m);
+                    res = Regresi.regresiLinearQuadraticFile(m);
+                    for (String line : res) {
+                        System.out.println(line);
+                    }
+                    // Optionally save to a file
+                    MatrixOutput.saveFile(res);
                 }
             }
         }

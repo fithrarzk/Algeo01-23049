@@ -10,28 +10,16 @@ public class test {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Read the matrix dimensions
-        System.out.print("Masukan jumlah baris: ");
-        int rows = scanner.nextInt();
-        System.out.print("Masukan jumlah kolom: ");
-        int cols = scanner.nextInt();
-
-        // Consume the leftover newline
-        scanner.nextLine();
-
-        // Create a 2D array to store the matrix
-        double[][] m = new double[rows][cols];
-
-        // Read the matrix elements row by row
-        System.out.println("Masukan elemen matriks:");
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                m[i][j] = scanner.nextDouble();
-            }
+        // Call normalMatrix to get the matrix from user input
+        double[][] m = normalMatrix(scanner);
+        if (m == null) {
+            System.out.println("Matriks tidak valid. Program dihentikan.");
+            scanner.close();
+            return; // Exit if the matrix input is invalid
         }
 
         // Initialize matrix object
-        MatrixOperasi matrix = new MatrixOperasi(m, rows, cols);
+        MatrixOperasi matrix = new MatrixOperasi(m, m.length, m[0].length);
 
         // Call gaussSPL method and accumulate the result in StringBuilder
         StringBuilder resultToFile = gaussSPL(matrix);
@@ -44,7 +32,7 @@ public class test {
 
         // Ask the user for the output file name after the operation is done
         System.out.print("Enter the name for the output file (e.g., solutions.txt): ");
-        String fileName = scanner.nextLine();
+        String fileName = "SPL.txt";
 
         // Specify the output directory (output/test)
         String directory = "test/output";
@@ -143,6 +131,31 @@ public class test {
             System.out.println("Content successfully written to " + fileName);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static double[][] normalMatrix(Scanner scanner) { // Input Biasa
+        try {
+            System.out.print("Masukan jumlah baris: ");
+            int baris = scanner.nextInt();
+            System.out.print("Masukan jumlah kolom: ");
+            int kolom = scanner.nextInt();
+
+            // Create the matrix
+            double[][] matrix = new double[baris][kolom];
+
+            System.out.println("Masukan elemen matriks: ");
+            for (int i = 0; i < baris; i++) {
+                for (int j = 0; j < kolom; j++) {
+                    System.out.printf("Elemen [%d][%d]: ", i, j);
+                    matrix[i][j] = scanner.nextDouble();
+                }
+            }
+            return matrix;
+        } catch (Exception e) {
+            System.out.println("Terjadi kesalahan dalam input. Silakan coba lagi.");
+            e.printStackTrace();
+            return null;
         }
     }
 }

@@ -1,4 +1,7 @@
 package Function;
+import java.util.ArrayList;
+import java.util.List;
+
 import ADT_Matrix.*;
 //import ADT_Matrix.MatrixInput;
 //import ADT_Matrix.MatrixOutput;
@@ -104,5 +107,34 @@ public class Determinan {
         }
         return det;
         
+    }
+
+    public static String[] handleDeterminantCases(MatrixOperasi m1, int choice) {
+        List<String> resultToFile = new ArrayList<>();
+        switch (choice) {
+            case 1:
+                double det1 = determinanKofaktor(m1);
+                if (Double.isNaN(det1)) {
+                    resultToFile.add("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan.");
+                } else {
+                    resultToFile.add("Hasil Determinan (Metode Kofaktor): " + det1);
+                }
+                break;
+
+            case 2:
+                double det2 = determinanReduksi(m1);
+                if (Double.isNaN(det2)) {
+                    resultToFile.add("Bukan Matrix Persegi Sehingga Nilai Determinan tidak Dapat Ditentukan.");
+                } else {
+                    resultToFile.add("Hasil Determinan (Metode Reduksi): " + det2);
+                }
+                break;
+
+            default:
+                resultToFile.add("Pilihan tidak valid.");
+                break;
+        }
+        // Convert the result list to a String array and return
+        return resultToFile.toArray(new String[0]);
     }
 }

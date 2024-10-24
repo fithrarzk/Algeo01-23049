@@ -1,0 +1,6 @@
+Masukkan nilai x yang ingin ditaksir: 
+f(x) = 
+2.0000 
+- 0.0000x1 
+- 0.0000x2, 
+f(xk) = 2.0000
